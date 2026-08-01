@@ -20,10 +20,25 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 
 /* ============ SKY BACKGROUND ============ */
 .sky{
-  position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
-  background:
-    radial-gradient(ellipse 900px 500px at 50% -10%, #131a2c 0%, transparent 60%),
-    linear-gradient(180deg, #0a0d16 0%, #07080a 55%, #050505 100%);
+  position:fixed; inset:0; z-index:2; overflow:hidden; pointer-events:none;
+  /* Hintergrund transparent — Dario-Savior.jpg scheint durch */
+  background: transparent;
+}
+
+/* ============ DARIO HERO BACKGROUND ============ */
+/* Dario-Savior.jpg liegt fix hinter allem — scrollt nie mit */
+.dario-hero-bg{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background-image:url('../assets/Dario-Savior.jpg');
+  background-size:cover;
+  background-position:center top;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+/* Dunkler Overlay damit Text überall lesbar bleibt */
+.dario-hero-bg::after{
+  content:''; position:absolute; inset:0;
+  background:rgba(7,8,10,.62);
 }
 .sky-glow{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; animation:pulseGlow 12s ease-in-out infinite;}
 .sky-glow--red{width:520px; height:520px; top:-160px; right:-120px; background:radial-gradient(circle, rgba(231,0,19,.55), transparent 70%);}
@@ -48,21 +63,10 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 }
 
 /* ============ HEADER ============ */
-header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relative; z-index:2; overflow:hidden;}
+header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relative; z-index:10; overflow:hidden;}
 
-/* Eigenes Hero-Bild: docs/assets/hero-bg.jpg ablegen (gleicher Dateiname) — wird dann zum
-   fixen Seiten-Hintergrund (bleibt beim Scrollen stehen, wie .sky). Fehlt die Datei, bleibt
-   die Fläche transparent und der Sky-Hintergrund darunter scheint einfach durch. Der Verlauf
-   in ::after sorgt nur dafür, dass Text oben (Hero) und unten immer lesbar bleibt. */
-.hero-bg{
-  position:absolute; inset:0; z-index:0;
-  background-image:url('../assets/hero-bg.jpg');
-  background-size:cover; background-position:center;
-}
-.hero-bg::after{
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(7,8,10,.35) 0%, rgba(7,8,10,.75) 65%, var(--bg) 100%);
-}
+/* .hero-bg ist jetzt deaktiviert — Dario-Savior.jpg übernimmt als globaler fixed background */
+.hero-bg{ display:none; }
 .header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .eyebrow{
   font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
@@ -125,7 +129,7 @@ header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relati
 .tab:hover{color:var(--text);}
 .tab.active{color:var(--red); border-bottom-color:var(--red);}
 
-main{padding-top:30px; position:relative; z-index:2;}
+main{padding-top:30px; position:relative; z-index:10;}
 
 /* ============ DAY PLAN ============ */
 .day-plan{
@@ -234,7 +238,7 @@ main{padding-top:30px; position:relative; z-index:2;}
 .quiz-restart{background:none; border:1px solid var(--line); color:var(--text); padding:11px 20px; cursor:pointer; margin-top:14px; font-family:'IBM Plex Mono',monospace;}
 .quiz-restart:hover{border-color:var(--red); color:var(--red);}
 
-footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; font-family:'IBM Plex Mono',monospace; position:relative; z-index:2;}
+footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; font-family:'IBM Plex Mono',monospace; position:relative; z-index:10;}
 .mode-indicator{display:block; margin-bottom:8px; font-size:11px; letter-spacing:.03em; opacity:.75;}
 
 /* ============ USER MODAL ============ */
