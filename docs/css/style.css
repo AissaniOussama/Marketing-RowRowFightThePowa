@@ -22,7 +22,7 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 /* hero-bg.jpg liegt fix hinter der ganzen Seite — sichtbar sobald man aus dem Hero scrollt */
 .sky{
   position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
-  background-image:url('../assets/hero-bg.jpg');
+  background-image:url('../assets/hero-bg.png');
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
@@ -58,6 +58,11 @@ header{
   position:relative;
   z-index:2;
   overflow:hidden;
+  /* Dario-Bild füllt immer den kompletten Viewport-Bereich */
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
 }
 
 /* Dario-Bild als Hintergrund des Headers */
@@ -84,6 +89,9 @@ header::after{
 
 /* Alle direkten Kinder des Headers über dem Bild */
 header > *{ position:relative; z-index:2; }
+
+/* Letztes wrap (Tabbar) klebt am unteren Rand des Hero */
+header > .wrap:last-child{ margin-top:auto; }
 
 .header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .eyebrow{
