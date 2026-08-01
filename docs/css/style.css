@@ -92,41 +92,48 @@ header::after{
 /* Alle direkten Kinder über dem Overlay */
 header > *{ position:relative; z-index:2; }
 
-/* Top-Bar: Eyebrow + User-Button */
+/* Top-Bar: Eyebrow zentriert, User-Button absolut oben rechts */
 .header-top{
+  position:relative;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding-top:28px;
-  padding-bottom:0;
+  justify-content:center;   /* Eyebrow mittig */
+  padding:24px 20px 0;
+}
+.header-top .eyebrow{
+  text-align:center;
+}
+.header-top .user-btn{
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
 }
 
-/* Titel-Block: oben links, direkt unter der Top-Bar */
+/* Titel: direkt am linken Seitenrand (kein max-width wrap) */
 .hero-title{
-  padding-top:32px;
+  padding:28px 20px 0;
 }
 .hero-title .hero-h1{
   margin:0;
 }
 
-/* Spacer wächst und drückt den unteren Block nach unten */
+/* Spacer */
 .hero-spacer{ flex:1; }
 
-/* Unterer Block: Sub-Text + Fortschritt direkt über den Tabs */
+/* Unterer Block: volle Breite, direkt über Tabs */
 .hero-bottom{
-  padding-bottom:0;
+  padding:0 20px 0;
+  max-width:700px;
 }
 .hero-bottom .sub{
-  max-width:600px;
-  margin:0 0 20px;
-}
-.hero-bottom .progress-row{
-  max-width:600px;
+  margin:0 0 18px;
 }
 
-/* Tab-Bar klebt direkt darunter */
+/* Tab-Bar */
 .header-tabs{
-  padding-bottom:0;
+  padding:0 20px;
+  border-top:1px solid var(--line);
 }
 
 /* .header-row ersetzt durch .header-top */
