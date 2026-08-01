@@ -35,8 +35,25 @@
 </div>
 
 <header>
+  <!-- Eigenständiges Reaktor-Emblem, solange kein eigenes Foto in docs/assets/hero-bg.jpg liegt. -->
+  <div class="hero-emblem" aria-hidden="true">
+    <div class="hero-emblem__glow"></div>
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <circle class="ring" cx="200" cy="200" r="55"/>
+      <circle class="ring" cx="200" cy="200" r="100"/>
+      <circle class="ring" cx="200" cy="200" r="150"/>
+      <circle class="ring" cx="200" cy="200" r="195"/>
+      <g class="hero-emblem__spokes">
+        <line x1="200" y1="5" x2="200" y2="395"/>
+        <line x1="5" y1="200" x2="395" y2="200"/>
+        <line x1="45" y1="45" x2="355" y2="355"/>
+        <line x1="355" y1="45" x2="45" y2="355"/>
+      </g>
+      <circle class="core" cx="200" cy="200" r="13"/>
+    </svg>
+  </div>
   <!-- Eigenes Hero-Bild: Datei als docs/assets/hero-bg.jpg ablegen, dann taucht sie
-       automatisch hier auf. Ohne Datei bleibt einfach der Sky-Hintergrund sichtbar. -->
+       automatisch hier auf und überdeckt das Emblem. Ohne Datei bleibt der Sky-Hintergrund sichtbar. -->
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="wrap header-row">
     <p class="eyebrow"><span class="dot"></span> 3-Tage-Sprint · Marketing Grundlagen</p>
