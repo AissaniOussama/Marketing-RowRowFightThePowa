@@ -101,32 +101,30 @@ header > *{ position:relative; z-index:2; }
   padding-bottom:0;
 }
 
-/* Zentrierter Hero-Inhalt wächst und zentriert sich vertikal */
-.hero-center{
-  flex:1;
-  display:flex;
-  align-items:center;
-  padding:40px 0;
+/* Titel-Block: oben links, direkt unter der Top-Bar */
+.hero-title{
+  padding-top:32px;
 }
-.hero-center .wrap{
-  width:100%;
-  text-align:center;
-}
-.hero-center .hero-h1{
-  margin-left:auto;
-  margin-right:auto;
-}
-.hero-center .sub{
-  margin-left:auto;
-  margin-right:auto;
-}
-.hero-center .progress-row{
-  max-width:640px;
-  margin-left:auto;
-  margin-right:auto;
+.hero-title .hero-h1{
+  margin:0;
 }
 
-/* Tab-Bar klebt am unteren Rand */
+/* Spacer wächst und drückt den unteren Block nach unten */
+.hero-spacer{ flex:1; }
+
+/* Unterer Block: Sub-Text + Fortschritt direkt über den Tabs */
+.hero-bottom{
+  padding-bottom:0;
+}
+.hero-bottom .sub{
+  max-width:600px;
+  margin:0 0 20px;
+}
+.hero-bottom .progress-row{
+  max-width:600px;
+}
+
+/* Tab-Bar klebt direkt darunter */
 .header-tabs{
   padding-bottom:0;
 }
@@ -152,7 +150,7 @@ header > *{ position:relative; z-index:2; }
   font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
   font-size:clamp(34px,7vw,64px); line-height:.98; letter-spacing:.01em; margin:6px 0 18px; color:var(--text);
 }
-.slash-line{display:block; position:relative; width:fit-content; margin:0 auto;}
+.slash-line{display:block; position:relative; width:fit-content;}
 .word-kein{color:var(--red);}
 .word-zurueck{
   color:#adf992;
