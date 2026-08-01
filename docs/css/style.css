@@ -18,27 +18,12 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 .wrap{max-width:1000px;margin:0 auto;padding:0 20px; position:relative; z-index:2;}
 .muted-note{color:var(--muted); font-size:13px;}
 
-/* ============ SKY BACKGROUND ============ */
+/* ============ SKY BACKGROUND (nach dem Hero aktiv) ============ */
 .sky{
-  position:fixed; inset:0; z-index:2; overflow:hidden; pointer-events:none;
-  /* Hintergrund transparent — Dario-Savior.jpg scheint durch */
-  background: transparent;
-}
-
-/* ============ DARIO HERO BACKGROUND ============ */
-/* Dario-Savior.jpg liegt fix hinter allem — scrollt nie mit */
-.dario-hero-bg{
-  position:fixed; inset:0; z-index:1; pointer-events:none;
-  background-image:url('../assets/Dario-Savior.jpg');
-  background-size:cover;
-  background-position:center top;
-  background-attachment:fixed;
-  background-repeat:no-repeat;
-}
-/* Dunkler Overlay damit Text überall lesbar bleibt */
-.dario-hero-bg::after{
-  content:''; position:absolute; inset:0;
-  background:rgba(7,8,10,.62);
+  position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, #131a2c 0%, transparent 60%),
+    linear-gradient(180deg, #0a0d16 0%, #07080a 55%, #050505 100%);
 }
 .sky-glow{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; animation:pulseGlow 12s ease-in-out infinite;}
 .sky-glow--red{width:520px; height:520px; top:-160px; right:-120px; background:radial-gradient(circle, rgba(231,0,19,.55), transparent 70%);}
@@ -62,11 +47,59 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
   mask-image:linear-gradient(180deg, black 0%, transparent 55%);
 }
 
-/* ============ HEADER ============ */
-header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relative; z-index:10; overflow:hidden;}
+/* ============ HERO / HEADER ============ */
+/*
+  Dario-Savior.jpg füllt den Header als normaler (nicht-fixed) Hintergrund.
+  Beim Scrollen fadet das Hero-Bild via JS + opacity-Transition weg —
+  funktioniert cross-browser (kein background-attachment:fixed nötig).
+  Danach ist der Sky-Hintergrund sichtbar.
+*/
+header{
+  padding:40px 0 26px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  z-index:10;
+  overflow:hidden;
+  /* Fade-Transition für den Scroll-Effekt */
+  transition: opacity .25s ease;
+}
 
-/* .hero-bg ist jetzt deaktiviert — Dario-Savior.jpg übernimmt als globaler fixed background */
+/* Dario-Bild als Pseudo-Element hinter dem Header-Inhalt */
+header::before{
+  content:'';
+  position:absolute; inset:0; z-index:0;
+  background-image:url('../assets/Dario-Savior.jpg');
+  background-size:cover;
+  background-position:center top;
+  background-repeat:no-repeat;
+}
+/* Dunkler Verlauf-Overlay für Lesbarkeit */
+header::after{
+  content:'';
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(
+    180deg,
+    rgba(7,8,10,.30) 0%,
+    rgba(7,8,10,.60) 55%,
+    rgba(7,8,10,.90) 100%
+  );
+}
+
+/* Alle direkten Kinder des headers über dem Bild */
+header > *{ position:relative; z-index:2; }
+
+/* Klasse die JS setzt wenn Header aus dem Viewport scrollt */
+header.hero-hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+/* .hero-bg aus alter Version — deaktiviert */
 .hero-bg{ display:none; }
+
+/* dario-hero-bg aus alter Version — deaktiviert */
+.dario-hero-bg{ display:none; }
+
 .header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .eyebrow{
   font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
@@ -286,4 +319,5 @@ footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; 
 
 @media (prefers-reduced-motion: reduce){
   .cloud, .sky-glow, .progress-fill, .flashcard, .word-zurueck{animation:none !important;}
+  header{ transition:none !important; }
 }
