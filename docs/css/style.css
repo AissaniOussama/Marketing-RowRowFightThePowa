@@ -19,13 +19,19 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 .muted-note{color:var(--muted); font-size:13px;}
 
 /* ============ SKY BACKGROUND ============ */
-/* hero-bg.jpg liegt fix hinter der ganzen Seite — sichtbar sobald man aus dem Hero scrollt */
+/* hero-bg.png liegt fix hinter der ganzen Seite — sichtbar sobald man aus dem Hero scrollt */
 .sky{
   position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
   background-image:url('../assets/hero-bg.png');
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
+}
+/* Dunkler Overlay über hero-bg.png für Lesbarkeit der Karten */
+.sky::before{
+  content:'';
+  position:absolute; inset:0;
+  background:rgba(7,8,10,.70);
 }
 .sky-glow{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; animation:pulseGlow 12s ease-in-out infinite;}
 .sky-glow--red{width:520px; height:520px; top:-160px; right:-120px; background:radial-gradient(circle, rgba(231,0,19,.55), transparent 70%);}
@@ -49,51 +55,83 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
   mask-image:linear-gradient(180deg, black 0%, transparent 55%);
 }
 
-/* ============ HEADER ============ */
-/* Dario-Savior.jpg nur im Header-Bereich — scrollt ganz normal mit dem Inhalt mit.
-   Kein fixed, kein JS nötig. Sky-Hintergrund bleibt darunter unverändert. */
+/* ============ HEADER / HERO ============ */
 header{
-  padding:40px 0 26px;
   border-bottom:1px solid var(--line);
   position:relative;
   z-index:2;
   overflow:hidden;
-  /* Dario-Bild füllt immer den kompletten Viewport-Bereich */
   min-height:100svh;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
 }
 
-/* Dario-Bild als Hintergrund des Headers */
+/* Dario-Savior.jpg füllt den kompletten Hero */
 header::before{
   content:'';
   position:absolute; inset:0; z-index:0;
   background-image:url('../assets/Dario-Savior.jpg');
   background-size:cover;
-  background-position:center top;
+  background-position:center center;
   background-repeat:no-repeat;
 }
 
-/* Dunkler Verlauf-Overlay damit Text lesbar bleibt */
+/* Starker Verlauf-Overlay: oben + unten dunkel, Mitte etwas heller */
 header::after{
   content:'';
   position:absolute; inset:0; z-index:1;
-  background:linear-gradient(
-    180deg,
-    rgba(7,8,10,.30) 0%,
-    rgba(7,8,10,.65) 60%,
-    rgba(7,8,10,.92) 100%
-  );
+  background:
+    linear-gradient(180deg,
+      rgba(7,8,10,.75) 0%,
+      rgba(7,8,10,.20) 35%,
+      rgba(7,8,10,.20) 65%,
+      rgba(7,8,10,.85) 100%
+    );
 }
 
-/* Alle direkten Kinder des Headers über dem Bild */
+/* Alle direkten Kinder über dem Overlay */
 header > *{ position:relative; z-index:2; }
 
-/* Letztes wrap (Tabbar) klebt am unteren Rand des Hero */
-header > .wrap:last-child{ margin-top:auto; }
+/* Top-Bar: Eyebrow + User-Button */
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-top:28px;
+  padding-bottom:0;
+}
 
-.header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+/* Zentrierter Hero-Inhalt wächst und zentriert sich vertikal */
+.hero-center{
+  flex:1;
+  display:flex;
+  align-items:center;
+  padding:40px 0;
+}
+.hero-center .wrap{
+  width:100%;
+  text-align:center;
+}
+.hero-center .hero-h1{
+  margin-left:auto;
+  margin-right:auto;
+}
+.hero-center .sub{
+  margin-left:auto;
+  margin-right:auto;
+}
+.hero-center .progress-row{
+  max-width:640px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Tab-Bar klebt am unteren Rand */
+.header-tabs{
+  padding-bottom:0;
+}
+
+/* .header-row ersetzt durch .header-top */
 .eyebrow{
   font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
   color:var(--red); margin:0; display:flex; align-items:center; gap:10px;
@@ -114,7 +152,7 @@ header > .wrap:last-child{ margin-top:auto; }
   font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
   font-size:clamp(34px,7vw,64px); line-height:.98; letter-spacing:.01em; margin:6px 0 18px; color:var(--text);
 }
-.slash-line{display:block; position:relative; width:fit-content;}
+.slash-line{display:block; position:relative; width:fit-content; margin:0 auto;}
 .word-kein{color:var(--red);}
 .word-zurueck{
   color:#adf992;
@@ -307,7 +345,7 @@ footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; 
 @media (max-width:600px){
   .grid{grid-template-columns:1fr;}
   .day-plan{flex-direction:column;}
-  .header-row{flex-direction:column; align-items:flex-start; gap:12px;}
+  .header-top{flex-direction:column; align-items:flex-start; gap:12px;}
 }
 
 @media (prefers-reduced-motion: reduce){

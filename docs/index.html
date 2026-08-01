@@ -19,29 +19,36 @@
 </div>
 
 <header>
-  <div class="wrap header-row">
+  <!-- Top-Bar: Eyebrow links, User-Button rechts -->
+  <div class="wrap header-top">
     <p class="eyebrow"><span class="dot"></span> 3-Tage-Sprint · Marketing Grundlagen</p>
     <button class="user-btn" id="user-btn" type="button">
       <span class="user-btn__icon">◆</span>
       <span id="user-btn-label">Kein Profil</span>
     </button>
   </div>
-  <div class="wrap">
-    <h1 class="hero-h1">
-      <span class="slash-line">DREI TAGE.</span>
-      <span class="slash-line">EIN ZIEL.</span>
-      <span class="slash-line"><span class="word-kein">KEIN</span> <span class="word-zurueck">ZURÜCK.</span></span>
-    </h1>
-    <p class="sub">141 Karteikarten aus deinen Vorlesungsnotizen, sortiert nach Thema und Tag. Der Fortschritt bleibt gespeichert — pro Profil, auch geräteübergreifend, wenn der Server mitläuft. Am Ende wartet das Quiz auf die Fallstricke.</p>
-    <div class="progress-row">
-      <div class="progress-shell">
-        <div class="progress-label"><span id="progress-text">0 / 141 gelernt</span><span id="progress-pct">0%</span></div>
-        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <!-- Zentrierter Hero-Inhalt -->
+  <div class="hero-center">
+    <div class="wrap">
+      <h1 class="hero-h1">
+        <span class="slash-line">DREI TAGE.</span>
+        <span class="slash-line">EIN ZIEL.</span>
+        <span class="slash-line"><span class="word-kein">KEIN</span> <span class="word-zurueck">ZURÜCK.</span></span>
+      </h1>
+      <p class="sub">141 Karteikarten aus deinen Vorlesungsnotizen, sortiert nach Thema und Tag. Der Fortschritt bleibt gespeichert — pro Profil, auch geräteübergreifend, wenn der Server mitläuft. Am Ende wartet das Quiz auf die Fallstricke.</p>
+      <div class="progress-row">
+        <div class="progress-shell">
+          <div class="progress-label"><span id="progress-text">0 / 141 gelernt</span><span id="progress-pct">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+        <button class="reset-btn" id="reset-btn" type="button">Fortschritt zurücksetzen</button>
       </div>
-      <button class="reset-btn" id="reset-btn" type="button">Fortschritt zurücksetzen</button>
     </div>
   </div>
-  <div class="wrap">
+
+  <!-- Tab-Bar unten -->
+  <div class="wrap header-tabs">
     <div class="tabbar" id="tabbar"></div>
   </div>
 </header>
