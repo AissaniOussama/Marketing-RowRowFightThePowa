@@ -54,7 +54,20 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 @keyframes spinSlow{to{transform:rotate(360deg);}}
 
 /* ============ HEADER ============ */
-header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relative; z-index:2;}
+header{padding:40px 0 26px; border-bottom:1px solid var(--line); position:relative; z-index:2; overflow:hidden;}
+
+/* Eigenes Hero-Bild: docs/assets/hero-bg.jpg ablegen (gleicher Dateiname) — taucht dann
+   automatisch als Hintergrund hinter dem Headline-Text auf. Fehlt die Datei, bleibt die
+   Fläche transparent und der Sky-Hintergrund scheint einfach durch. */
+.hero-bg{
+  position:absolute; inset:0; z-index:0;
+  background-image:url('../assets/hero-bg.jpg');
+  background-size:cover; background-position:center;
+}
+.hero-bg::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(7,8,10,.35) 0%, rgba(7,8,10,.75) 65%, var(--bg) 100%);
+}
 .header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .eyebrow{
   font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
