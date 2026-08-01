@@ -9,7 +9,14 @@ let quizIdx = 0, quizScore = 0, quizOrder = [], quizAnswered = false;
 /* ============ USER / PROGRESS ============ */
 async function refreshUserButton() {
   const label = document.getElementById('user-btn-label');
-  label.textContent = activeUser ? activeUser.name : 'Profil wählen';
+  const icon  = document.getElementById('user-btn-icon');
+  if (activeUser) {
+    label.textContent = activeUser.name;
+    if (icon) icon.textContent = activeUser.name.charAt(0).toUpperCase();
+  } else {
+    label.textContent = 'Profil wählen';
+    if (icon) icon.textContent = '?';
+  }
 }
 
 async function loadProgressForActiveUser() {
