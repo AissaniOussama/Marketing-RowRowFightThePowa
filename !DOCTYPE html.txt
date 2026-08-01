@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing-Klausur Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12141a;
+    --bg-alt:#181b22;
+    --card:#1e222c;
+    --card-hi:#262b37;
+    --line:#2c313e;
+    --text:#eae7e0;
+    --muted:#8d93a3;
+    --amber:#f2a93b;
+    --amber-dim:#7a5c26;
+    --teal:#4fd1ae;
+    --red:#ef6b5e;
+    --shadow: 0 12px 30px -12px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;}
+  body{padding:0 0 80px 0;}
+  ::selection{background:var(--amber);color:#1a1a1a;}
+
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+
+  /* HEADER */
+  header{
+    background:
+      radial-gradient(circle at 15% 0%, rgba(242,169,59,.13), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(79,209,174,.10), transparent 50%),
+      var(--bg-alt);
+    border-bottom:1px solid var(--line);
+    padding:36px 0 26px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--amber); margin:0 0 10px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(242,169,59,.18);}
+  h1{
+    font-family:'Fraunces', serif; font-weight:600; font-size:clamp(28px,4.5vw,42px);
+    margin:0 0 8px; line-height:1.05; letter-spacing:-.01em;
+  }
+  h1 em{font-style:italic; color:var(--amber); font-weight:500;}
+  .sub{color:var(--muted); font-size:15px; max-width:640px; line-height:1.55; margin:0 0 22px;}
+
+  .progress-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .progress-shell{flex:1; min-width:220px;}
+  .progress-label{display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-bottom:6px; font-family:'IBM Plex Mono',monospace;}
+  .progress-track{height:8px; border-radius:5px; background:#0e1015; overflow:hidden; border:1px solid var(--line);}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--amber),var(--teal)); width:0%; transition:width .5s ease;}
+  .reset-btn{
+    background:none; border:1px solid var(--line); color:var(--muted); font-size:12px;
+    padding:8px 12px; border-radius:8px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
+    white-space:nowrap;
+  }
+  .reset-btn:hover{border-color:var(--red); color:var(--red);}
+
+  /* TABS */
+  .tabbar{
+    display:flex; gap:6px; overflow-x:auto; padding:16px 0 0;
+    border-bottom:1px solid var(--line); margin-top:10px;
+  }
+  .tab{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted);
+    background:none; border:none; padding:10px 16px; cursor:pointer; white-space:nowrap;
+    border-bottom:2px solid transparent; margin-bottom:-1px; transition:.15s;
+  }
+  .tab:hover{color:var(--text);}
+  .tab.active{color:var(--amber); border-bottom-color:var(--amber);}
+
+  main{padding-top:28px;}
+
+  /* DAY PLAN CARD */
+  .day-plan{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:20px 22px; margin-bottom:26px; display:flex; gap:18px; align-items:flex-start;
+  }
+  .day-plan .num{
+    font-family:'Fraunces',serif; font-size:34px; color:var(--amber); font-weight:600; line-height:1;
+    min-width:50px;
+  }
+  .day-plan h3{margin:0 0 6px; font-size:16px;}
+  .day-plan p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.6;}
+
+  /* NOTE CALLOUT */
+  .note{
+    background:linear-gradient(180deg, rgba(242,169,59,.09), rgba(242,169,59,.03));
+    border:1px solid var(--amber-dim); border-left:3px solid var(--amber);
+    border-radius:10px; padding:14px 16px; margin:0 0 22px; font-size:13.5px; line-height:1.6; color:#e6d9c2;
+  }
+  .note b{color:var(--amber); font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; display:block; margin-bottom:5px;}
+
+  /* CATEGORY HEADER */
+  .cat-head{display:flex; align-items:baseline; justify-content:space-between; margin:34px 0 14px;}
+  .cat-head h2{font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin:0;}
+  .cat-count{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);}
+
+  /* CARD GRID */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px;}
+
+  .flashcard{
+    perspective:1400px; height:190px; cursor:pointer;
+  }
+  .flashcard-inner{
+    position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:12px;
+    border:1px solid var(--line); padding:16px; overflow-y:auto;
+    display:flex; flex-direction:column;
+  }
+  .face.front{background:var(--card);}
+  .face.back{background:var(--card-hi); transform:rotateY(180deg);}
+  .flashcard.learned .face.front{border-color:rgba(79,209,174,.5);}
+  .flashcard.learned .face.front::after{
+    content:'✓ gelernt'; position:absolute; top:10px; right:12px; font-size:10px;
+    font-family:'IBM Plex Mono',monospace; color:var(--teal); letter-spacing:.04em;
+  }
+  .tag{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.05em;
+    text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-bottom:8px; align-self:flex-start;
+  }
+  .tag.top{background:rgba(239,107,94,.16); color:var(--red);}
+  .tag.wichtig{background:rgba(242,169,59,.16); color:var(--amber);}
+  .tag.knifflig{background:rgba(79,209,174,.16); color:var(--teal);}
+  .q-text{font-size:14.5px; line-height:1.45; font-weight:600; flex:1;}
+  .hint{font-size:10.5px; color:var(--muted); font-family:'IBM Plex Mono',monospace; margin-top:auto; padding-top:8px;}
+  .a-text{font-size:13px; line-height:1.55; color:#dcd8ce; flex:1;}
+  .a-text ul{margin:0; padding-left:18px;}
+  .a-text li{margin-bottom:4px;}
+  .learn-actions{display:flex; gap:8px; margin-top:10px;}
+  .learn-actions button{
+    flex:1; font-size:11px; font-family:'IBM Plex Mono',monospace; padding:6px 4px; border-radius:7px;
+    border:1px solid var(--line); background:#171a21; color:var(--muted); cursor:pointer;
+  }
+  .learn-actions button.yes:hover{border-color:var(--teal); color:var(--teal);}
+  .learn-actions button.no:hover{border-color:var(--red); color:var(--red);}
+
+  /* FILTER ROW */
+  .filter-row{display:flex; gap:8px; margin-bottom:6px; flex-wrap:wrap;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; padding:6px 12px; border-radius:20px;
+    border:1px solid var(--line); background:var(--card); color:var(--muted); cursor:pointer;
+  }
+  .chip.active{border-color:var(--amber); color:var(--amber); background:rgba(242,169,59,.08);}
+
+  /* QUIZ */
+  .quiz-shell{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px; max-width:640px; margin:0 auto;}
+  .quiz-progress{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-bottom:14px; display:flex; justify-content:space-between;}
+  .quiz-q{font-family:'Fraunces',serif; font-size:19px; font-weight:600; line-height:1.4; margin:0 0 20px;}
+  .quiz-opt{
+    display:block; width:100%; text-align:left; background:var(--bg-alt); border:1px solid var(--line);
+    color:var(--text); padding:13px 16px; border-radius:10px; margin-bottom:10px; cursor:pointer; font-size:14px;
+    font-family:'Inter',sans-serif; transition:.15s;
+  }
+  .quiz-opt:hover{border-color:var(--amber);}
+  .quiz-opt.correct{border-color:var(--teal); background:rgba(79,209,174,.12); color:var(--teal);}
+  .quiz-opt.wrong{border-color:var(--red); background:rgba(239,107,94,.12); color:var(--red);}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); line-height:1.6; background:var(--bg-alt); border-radius:10px; padding:12px 14px; margin-top:6px; display:none;}
+  .quiz-explain.show{display:block;}
+  .quiz-next{margin-top:18px; background:var(--amber); color:#1a1408; border:none; padding:11px 20px; border-radius:9px; font-weight:600; cursor:pointer; font-size:14px; display:none;}
+  .quiz-next.show{display:inline-block;}
+  .quiz-result{text-align:center;}
+  .quiz-result .big{font-family:'Fraunces',serif; font-size:48px; color:var(--amber); margin:6px 0;}
+  .quiz-restart{background:none; border:1px solid var(--line); color:var(--text); padding:10px 18px; border-radius:9px; cursor:pointer; margin-top:14px;}
+
+  footer{text-align:center; color:var(--muted); font-size:12px; padding:40px 0 0; font-family:'IBM Plex Mono',monospace;}
+
+  @media (max-width:600px){
+    .grid{grid-template-columns:1fr;}
+    .day-plan{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow"><span class="dot"></span> 3-Tage-Sprint · Marketing Grundlagen</p>
+    <h1>Alles in den Kopf,<br><em>bevor die Klausur kommt.</em></h1>
+    <p class="sub">143 Karteikarten aus euren Vorlesungsnotizen, sortiert nach Thema und Tag. Karten merken sich, was du schon kannst — auch wenn du den Tab schließt. Am Ende: ein Multiple-Choice-Quiz für die Fallstricke.</p>
+    <div class="progress-row">
+      <div class="progress-shell">
+        <div class="progress-label"><span id="progress-text">0 / 143 gelernt</span><span id="progress-pct">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+      <button class="reset-btn" id="reset-btn">Fortschritt zurücksetzen</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="tabbar" id="tabbar"></div>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<footer>Viel Erfolg — du bist auch nur ein Mensch, aber ein gut vorbereiteter. 💪</footer>
+
+<script>
+/* ============ DATA ============ */
+
+const CATEGORIES = [
+  {id:1, day:1, name:"Grundlagen & Strategie-Tools", short:"Grundlagen"},
+  {id:2, day:1, name:"Güter, Organisation & Vertrieb-Basics", short:"Organisation"},
+  {id:3, day:2, name:"Konsumentenverhalten & Marktforschung", short:"Konsument & Forschung"},
+  {id:4, day:2, name:"Produktpolitik & Innovation", short:"Produkt & Innovation"},
+  {id:5, day:3, name:"Preispolitik", short:"Preis"},
+  {id:6, day:3, name:"Vertriebs- & Kommunikationspolitik", short:"Vertrieb & Kommunikation"},
+];
+
+const DAY_INFO = {
+  1:{title:"Fundament legen", desc:"Grundbegriffe, Analyse-Tools (SWOT, BCG, Ansoff) und wie Marketing organisatorisch aufgebaut ist. Das ist die Basis, auf der alles andere aufbaut — hier lohnt sich Gründlichkeit."},
+  2:{title:"Verstehen, wie Kunden ticken & wie Produkte entstehen", desc:"Kaufverhalten, Marktforschungsmethoden und der komplette Innovationsprozess inkl. Scrum, Patente, Branding. Der inhaltlich größte Block — nimm dir Zeit."},
+  3:{title:"Preis, Vertrieb, Kommunikation — und Generalprobe", desc:"Die letzten beiden Marketing-Mix-Bereiche, danach: alle Karten nochmal querlesen und das Quiz als Generalprobe für die Multiple-Choice-Fragen."},
+};
+
+const NOTES = {
+  1: `Beim <b>relativen Marktanteil</b> ist z.&nbsp;B. 101&nbsp;% völlig korrekt (Marktführer = 100). Bei einem <b>Monopolisten</b> existiert kein Marktanteil — nicht 0&nbsp;%, sondern schlicht „nicht existent". Die <b>4 Ps</b> sollst du laut Prof komplett auswendig können.`,
+  2: `Timeline aus der Vorlesung: <b>50er/60er</b> Verkäufermarkt (Vertrieb über Marketing) → <b>70er/80er</b> gleichberechtigt, Marktdifferenzierung ("Gießkanne über die Republik") → <b>90er</b> USP → <b>2000er</b> CRM → <b>2010er</b> Netzwerk → heute: differenzierte Marktbearbeitung (Clustering). Funktionsorientierte Organisation ist in der Praxis <b>selten</b>. Bei Matrix-Konflikten bekommt meist die <b>funktionsorientierte Seite</b> das letzte Wort.`,
+  3: `<b>Vollerhebung</b> wird im Marketing kaum genutzt (wäre quasi ein Zensus) — <b>Teilerhebung</b> ist der Normalfall. Achtung: <b>willkürliche Auswahl ist NICHT dasselbe wie Zufallsauswahl!</b> Tachistoskop: Testbild z.&nbsp;B. nur 1 Sekunde zeigen, um zu prüfen, ob eine Kampagne "ankommt".`,
+  4: `<b>Five Whys</b>: wiederholt "Warum?" fragen (klassisch 5×, kann auch 3 oder 10 sein) bis man zur wahren Ursache kommt. Der Prof hat im Kurs einen <b>Film zur geplanten Obsoleszenz</b> gezeigt (Termin 03.06) sowie einen zum Prototyping — falls euch der Link vorliegt, nochmal reinschauen. <b>Servicepolitik</b> betrifft NICHT das Produkt selbst, sondern die Konfiguration/den Rahmen drumherum.`,
+  5: `Beispiele aus der Vorlesung: räumliche Preisdifferenzierung = z.&nbsp;B. Flugpreis-Rabatt je nach Herkunftsland; personelle = z.&nbsp;B. teurere Preise für Nutzer bestimmter Geräte (Apple-Beispiel); Bündelung = Bundle günstiger als Einzelkauf. Der <b>Veblen-Effekt</b> ist die Ausnahme, bei der eine steigende Preis-Absatz-Kurve entstehen kann.`,
+  6: `Bei der Zielgruppenerreichung willst du den Sweetspot treffen — die zwei Verlust-Pole heißen <b>Streuverlust</b> (erreichte Leute, die nie Kunden werden) und <b>Nicht-Erreichen der Zielgruppe</b> (Wunschkunden, die auf deinen Kanälen gar nicht unterwegs sind).`,
+};
+
+// a: string OR array of bullet strings. tag: optional 'top' | 'wichtig' | 'knifflig'
+const CARDS = [
+// ---- Kategorie 1: Grundlagen & Strategie-Tools ----
+{cat:1, q:`Was bedeutet USP?`, a:`Unique Selling Point — das Alleinstellungsmerkmal eines Produkts.`},
+{cat:1, q:`Was ist ein Deonym?`, a:[`Eine Marke, die den Namen für eine ganze Produktgattung liefert.`,`Beispiele: Zewa, Tempo, Selter (aus der Vorlesung auch: Edding, Tesa)`]},
+{cat:1, q:`Was ist ein Kuppelprodukt? Was hat der Gewinn/die Einsparung eines Unternehmens damit zu tun?`, a:[`Ein Abfallprodukt, das ohnehin bei der Produktion entsteht.`,`Es bringt finanziell keinen Vorteil, es einsparen zu wollen.`]},
+{cat:1, q:`Welche drei Kernelemente thematisierten wir beim Marketing-Konzept?`, a:[`1. Marketingsituation`,`2. Marketingziele`,`3. Marketinginstrumente`]},
+{cat:1, q:`Was sind Marketingsituationen — was ist damit gemeint, was macht man dort, welche Arten gibt es?`, a:[`Situationsanalyse: Chancen-Risiken, Stärken-Schwächen`,`Werkzeuge: SWOT, Lebenszyklusanalyse, BCG-Matrix`]},
+{cat:1, q:`Knifflige Frage aus der Vorlesung: Wann macht es Sinn, bei einer Stärken/Schwäche-Analyse etwas zu ändern?`, a:`Abwägen, was Sinn macht — eine Standort-Schwäche ist bei einem digitalen Unternehmen z.B. quasi irrelevant, da man es ohnehin übers Internet erreicht.`, tag:'knifflig'},
+{cat:1, q:`Lebenszyklusanalyse: Was ist ein Relaunch, und wie sind die Achsen der Grafik aufgebaut?`, a:[`Relaunch: ein Produkt minimal ändern, damit es nochmal einen Boost bekommt (z.B. Facelift)`,`x-Achse = Umsatz/Absatz`,`y-Achse = Zeit`]},
+{cat:1, q:`BCG-Matrix: Wie stellt man Umsatzgrößen dar, was gibt am meisten her — und wie sind die Achsen beschriftet?`, a:[`Umsatzgrößen als unterschiedlich große Kreise darstellen`,`Cash-Cows geben am meisten her, da sie keine Investitionsgelder mehr fressen — bei Stars ist das noch der Fall`,`x-Achse: Marktwachstum`,`y-Achse: relativer Marktanteil`], tag:'wichtig'},
+{cat:1, q:`Was gehört zu den Marketingzielen?`, a:`Psychologische und ökonomische Ziele.`},
+{cat:1, q:`Was gehört zu den Marketinginstrumenten?`, a:`Product, Price, Promotion, Place (die 4 Ps).`, tag:'wichtig'},
+{cat:1, q:`Was muss man über den relativen Marktanteil wissen?`, a:[`Man misst ihn am Marktführer: eigener Anteil ÷ Anteil des Marktführers`,`Bei Monopolisten existiert kein Marktanteil (nicht 0 %, sondern „nicht existent")`,`Er kann nicht negativ sein, aber über 100 % liegen`], tag:'wichtig'},
+{cat:1, q:`Was besagt die Produkt-Markt-Matrix nach Ansoff?`, a:`Sie zeigt, was eine Firma tut, je nachdem ob Produkt und Markt vorhanden oder neu sind — soll ein vorhandenes/neues Produkt an einem vorhandenen/neuen Markt mehr Umsatz generieren?`},
+{cat:1, q:`Wie heißen die vier Zustände der Ansoff-Matrix, und was beschreiben sie?`, a:[`Vorhanden + Vorhanden: Marktdurchdringung — mehr Kunden gewinnen`,`Produkt vorhanden + Markt neu: Markterschließung — Produkt an neuen Märkten verkaufen`,`Produkt neu + Markt vorhanden: Sortimentserweiterung — neues Produkt außerhalb des bisherigen Sortiments`,`Neu + Neu: Diversifikation — vertikal, horizontal oder lateral`], tag:'wichtig'},
+{cat:1, q:`Was unterscheidet vertikale, horizontale und laterale Diversifikation?`, a:[`Vertikal: ein vor- oder nachgelagertes Produkt in der Produktkette wird neu erschlossen`,`Horizontal: ein Rohstoff aus einem Produkt wird auch in einem anderen genutzt`,`Lateral: eine komplett neue Sache (z.B. Rolls Royce mit Autos UND Turbinen)`]},
+
+// ---- Kategorie 2: Güter, Organisation & Vertrieb-Basics ----
+{cat:2, q:`Welche drei Güterarten gibt es im Marketing?`, a:[`Konsumgüter`,`Dienstleistungsgüter`,`Investitionsgüter`]},
+{cat:2, q:`Konsumgüter: welche zwei Arten gibt es, und was macht sie aus?`, a:[`Verbrauchsgüter: einmalige Verwendung (Lebensmittel)`,`Gebrauchsgüter: mehrmalige/dauerhafte Verwendung (Auto)`]},
+{cat:2, q:`Was sind Besonderheiten des Konsumgütermarketings? (6)`, a:[`Originärer Bedarf (Kunde will es direkt haben)`,`Viele Menschen kaufen unabhängig voneinander`,`Intensiver Werbeaufwand`,`Mehrstufiger, indirekter Vertrieb (z.B. über Händler)`,`Pull- & Push-Marketing`,`Markenpiraten, Me-too-Produkte, Produktmanager im Einsatz`]},
+{cat:2, q:`Was ist die Push-Strategie?`, a:[`Hersteller ermutigt Händler, die Produkte an Endkunden zu verkaufen — mittels:`,`angepassten Konditionen, Exklusivitätsverträgen, kostenlosen Vorführgeräten, Sales-Außendienstlern beim Händler, Rücknahmeverpflichtung`]},
+{cat:2, q:`Was ist die Pull-Strategie?`, a:`Hersteller sorgt dafür, dass der Endnutzer selbst für Nachfrage bei Händlern sorgt — indem er das Produkt direkt bewirbt.`},
+{cat:2, q:`Investitionsgütermarketing ist das Gleiche wie...?`, a:`Industriegütermarketing.`},
+{cat:2, q:`In welche vier Bereiche wird Investitions-/Industriegütermarketing aufgeteilt?`, a:[`Produktgeschäft (z.B. Stahlträger)`,`Anlagengeschäft (z.B. Kraftwerk)`,`Systemgeschäft (z.B. Computernetzwerk)`,`Zulieferergeschäft (z.B. Scheinwerfer)`]},
+{cat:2, q:`Wonach richtet sich, ob ein Produkt Investitions-/Industriegut oder Konsumgut ist?`, a:`Privat = Konsumgut. Gewerblich = Investitions-/Industriegut.`},
+{cat:2, q:`Was sind Besonderheiten bei Investitions-/Industriegütermarketing?`, a:[`Eine originäre Nachfrage wird in mehrere Teile zerteilt`,`Buying Center (Kaufentscheidung durch mehrere Personengruppen)`,`Direktvertrieb als Hauptabsatzweg`,`Wenige Anbieter/Nachfrager → abgeleitete Nachfrage`]},
+{cat:2, q:`Aus welchen Personengruppen besteht ein Buying Center, und wofür sind sie da?`, a:[`Buyer: achtet auf Preis und Vertragsbedingungen`,`User: will, dass das Produkt einfach & gut nutzbar ist`,`Decider: trifft die finale Entscheidung (oft nach Rentabilität)`,`Gatekeeper: kontrolliert, welche Infos zum Entscheider durchkommen`,`Influencer: gibt Empfehlungen/Fachmeinungen ab`], tag:'wichtig'},
+{cat:2, q:`Welche zwei Arten des Dienstleistungsmarketing kennen wir?`, a:[`Persönliche Dienstleistungen`,`Automatisierte Dienstleistungen`]},
+{cat:2, q:`Was sind Besonderheiten des Dienstleistungsmarketing?`, a:[`Immateriell → nicht lager- und transportfähig`,`Produktion und Konsumtion zum gleichen Zeitpunkt`,`Hohe Bedeutung der Mund-zu-Mund-Kommunikation`,`Uno-Actu-Prinzip, Yield Management`,`Problematik externer Faktoren → DE-Marketing`]},
+{cat:2, q:`Was bedeutet Uno-Actu-Prinzip?`, a:`Die Dienstleistung wird gleichzeitig erstellt und konsumiert — daher nicht speicherbar.`},
+{cat:2, q:`Was bedeutet Yield Management?`, a:`Preise werden flexibel an Nachfrage und Auslastung angepasst, um den Gewinn zu maximieren (z.B. wie belädt man einen LKW so voll wie möglich, ohne zu schwer zu werden).`},
+{cat:2, q:`Was ist die Problematik externer Faktoren im "DE-Marketing"?`, a:`Die Dienstleistungsqualität wird durch nicht kontrollierbare äußere Einflüsse mitbestimmt und ist daher schwer planbar.`},
+{cat:2, q:`Wie waren Marketing und Vertrieb historisch angeordnet?`, a:[`50er/60er: Vertrieb über Marketing`,`70er–80er/90er: gleichberechtigt`,`seit den 2000ern: Marketing über Vertrieb`], tag:'wichtig'},
+{cat:2, q:`Wenn Marketing dem Vertrieb übergeordnet ist — welche drei Marketingorganisationen gibt es dann?`, a:[`Funktionsorientiert`,`Objektorientiert`,`Matrixorientiert`]},
+{cat:2, q:`Wie sind funktionsorientierte Marketingorganisationen aufgebaut?`, a:`Nach Abteilungen: Produktion, Finanzen, Personal, Marketing etc. (in der Praxis eher selten).`},
+{cat:2, q:`Was ist ein Monoproduktunternehmen — gibt es die heute noch häufig?`, a:`Unternehmen, die nur ein Produkt anbieten — heute eher selten.`},
+{cat:2, q:`Wie sind objektorientierte Marketingorganisationen aufgebaut?`, a:`Nach Produkt A, Produkt B, ... (z.B. Mercedes: A-Klasse, B-Klasse, C-Klasse). Risiko: redundante Arbeit, z.B. doppelte Marktforschung. Kann auch nach Kundengruppe organisiert sein → Key Account Manager.`},
+{cat:2, q:`Wie kann man z.B. bei objektorientierten Organisationen Kosten senken?`, a:`Redundante Bereiche wie den Vertrieb zusammenführen.`},
+{cat:2, q:`Wer sind die Produktmanager bei einer objektorientierten Marketingorganisation?`, a:`Die Heads der jeweiligen Produkte.`},
+{cat:2, q:`Wie ist eine matrixorientierte Marketingorganisation aufgebaut?`, a:`Ein Mix aus objekt- und funktionsorientiert.`},
+{cat:2, q:`Welche Probleme ergeben sich bei der Matrix-Marketingorganisation?`, a:[`Es gibt immer zwei Chefs`,`Unterschiedliche interne Interessen führen zu Reibung ("Hitze") — schwierige Entscheidungs-/Zuständigkeitsabgrenzung`,`Lösung: entweder den Vorgesetzten fragen, oder die funktionsorientierte Seite bekommt Vorrang`,`Vorteil: Expertise beider Seiten`]},
+{cat:2, q:`Was bedeutet Glocal?`, a:`Mix aus globaler und lokaler Marketingstrategie: auf internationaler Ebene werden Vorgaben gemacht (CI, Schrifttypen, Grundstrategie), lokal müssen sie übernommen, dürfen aber leicht angepasst werden. → Think globally, act locally. Hauptfunktion der Zentrale: globales Know-how und Best Practices zwischen Ländern transferieren.`},
+
+// ---- Kategorie 3: Konsumentenverhalten & Marktforschung ----
+{cat:3, q:`Welche vier Typen von Kaufentscheidungen gibt es?`, a:[`Rationalverhalten — ich kaufe nur, weil ich es wirklich brauche`,`Gewohnheitsverhalten — Sachen, die ich immer wieder kaufe, ohne auf Preis/Menge zu achten`,`Sozial abhängiges Verhalten — wenn ich Gäste einlade, will ich was Gutes bieten`,`Impulsverhalten — "ach, wieso nicht"-Käufe außerhalb der Planung`]},
+{cat:3, q:`Beim rationalen Kaufverhalten unterscheidet man zwei Arten — welche?`, a:[`Extensives KV: große Auswahl zum Produkt`,`Limitiertes KV: geringes Involvement oder nur kleine Auswahl`]},
+{cat:3, q:`Was ist der Veblen-Effekt?`, a:`Aufgrund des höheren Preises denke ich, das Produkt sei besser als das billigere — deswegen kaufe ich es.`, tag:'wichtig'},
+{cat:3, q:`Was ist der Point of Sale?`, a:`Der Verkaufsort, an dem Kunden direkt mit Waren/Dienstleistungen in Kontakt kommen und der Kaufabschluss erfolgt.`},
+{cat:3, q:`Was sind das SR-Modell und das SOR-Modell — was unterscheidet sie?`, a:[`SR = Stimulus → (Blackbox) → Response`,`SOR = Stimulus → Organism → Response`,`Beschreiben den inneren Ablauf beim Kaufprozess`]},
+{cat:3, q:`Was löst den Stimulus beim Kaufprozess alles aus?`, a:`Alles, was die Sinne stimulieren kann.`},
+{cat:3, q:`Beim SOR-Modell ist die Blackbox "geöffnet" — wie lauten die fünf Schritte im Organism?`, a:[`1. Problemerkennung`,`2. Informationssuche`,`3. Alternativbewertung`,`4. Kaufentscheidung`,`5. Nachkaufverhalten`], tag:'wichtig'},
+{cat:3, q:`Wie kann eine Firma dem Kunden nach dem Kauf zeigen, dass er einen guten Deal gemacht hat?`, a:`Durch Rückgaberecht oder Bestpreisgarantie.`},
+{cat:3, q:`Was ist der Buyer's Remorse?`, a:`Das Gefühl von Bedauern, Angst oder Schuld, das oft kurz nach einer (meist größeren) Kaufentscheidung auftritt.`},
+{cat:3, q:`Nenne den Ablauf des Marktforschungsprozesses mit den jeweiligen Fragestellungen.`, a:[`1. Problemformulierung — Fragestellung/Themenstrukturierung`,`2. Auswahl der Marktforschungsmethode — Stichprobenplanung, Erhebungsinstrumente`,`3. Durchführung — Datengewinnung und -analyse`,`4. Dokumentation — Dateninterpretation und -präsentation`,`5. Fundierung von Marketingentscheidungen`], tag:'wichtig'},
+{cat:3, q:`Was ist der Unterschied zwischen Vollerhebung und Teilerhebung?`, a:[`Vollerhebung: alle Personen der Zielgruppe werden befragt`,`Teilerhebung: nur ein Teil, stichpunktartig befragt (im Marketing der Normalfall)`]},
+{cat:3, q:`Bei der Auswahl der Stichprobe gibt es zwei Methoden — welche?`, a:[`Bewusste Auswahl`,`Zufallsauswahl`]},
+{cat:3, q:`Bei der bewussten Auswahl gibt es vier Unterkategorien — wie heißen sie?`, a:[`Willkürliche Auswahl (wer gerade anwesend ist)`,`Konzentrationsverfahren (z.B. wer den meisten Umsatz macht)`,`Typische Auswahl (Personen mit Expertise)`,`Quotenauswahl (z.B. Frauen/Männer-Verteilung)`], tag:'wichtig'},
+{cat:3, q:`Bei der Datengewinnung gibt es primäre und sekundäre — was sind die Methoden dazu?`, a:[`Primär: Befragung und Beobachtung`,`Sekundär: interne Quellen oder externe Infoquellen`]},
+{cat:3, q:`Vor- und Nachteile der persönlichen Befragung (primär)?`, a:[`Vorteil: hohe Erfolgsquote, kontrollierte Befragungssituation`,`Nachteil: hohe Kosten, Interviewer-Bias, keine Anonymität`]},
+{cat:3, q:`Vor- und Nachteile der Online-Befragung (primär)?`, a:[`Vorteil: hohe Antwortbereitschaft`,`Nachteil: fraglich repräsentativ`]},
+{cat:3, q:`Nenne die vier apparativen Verfahren.`, a:[`Blickaufzeichnung`,`Venezianischer Spiegel`,`Tachistoskopisches Verfahren (durchschnittliche Anzeigedauer testen)`,`Age Explorer (lässt einen älter fühlen), Elektroenzephalogramm (misst Gehirnspannung)`]},
+
+// ---- Kategorie 4: Produktpolitik & Innovation ----
+{cat:4, q:`Ab wann wird etwas im Marketing als Flop bezeichnet?`, a:`Wenn ein Produkt nicht den gesamten Produktzyklus durchläuft.`},
+{cat:4, q:`Bei der Neuproduktplanung gibt es drei Ansätze — wie heißen sie?`, a:[`Produktinnovation: komplett neuartige Produkte`,`Produktverbesserung: Verbesserung bestimmter Eigenschaften/Merkmale`,`Produktdifferenzierung: zusätzliche Produkte neben den bisherigen`]},
+{cat:4, q:`Warum kann es wichtiger sein, gut zu kopieren, statt neu zu erfinden?`, a:`Weil es oft schon ausgeführte, verbesserte Ideen des Innovators sind.`},
+{cat:4, q:`Was ist der Survivor Bias?`, a:`Die, die überleben, gelten als die, die etwas erfunden haben — muss aber gar nicht stimmen.`},
+{cat:4, q:`Warum werden Innovationszeit und dazugehörige Monopole bei neuen Produkten heute immer seltener?`, a:`Globalisierung und schneller Wechsel der Unternehmen.`},
+{cat:4, q:`Unterschied zwischen Invention und Innovation?`, a:`Invention = Vorstufe. Innovation = erstmalige wirtschaftliche Anwendung einer Problemlösung.`, tag:'wichtig'},
+{cat:4, q:`War das iPhone eine neue Erfindung?`, a:`Nein — eher eine gefühlte Innovation. Ein Smartphone mit Internet gab es schon vorher, nur nicht alles in einem — also eher eine sehr gute neue Kopie.`},
+{cat:4, q:`Was ist ein Prosumer?`, a:`Producer + Consumer — jemand, der etwas kauft UND produziert, z.B. bei IKEA-Möbeln oder Lego.`},
+{cat:4, q:`Nenne den Neuproduktplanungsprozess.`, a:[`1. Suche nach Produktideen`,`2. Grobauswahl`,`3. Entwicklung & Prüfung von Produktkonzepten`,`4. Feinauswahl (Wirtschaftlichkeitsanalyse)`,`5. Einführung des Neuprodukts`]},
+{cat:4, q:`Bei der Suche nach Produktideen: interne und externe Quellen?`, a:[`Intern: Kundenanfragen, betriebliches Vorschlagswesen, F&E-Ergebnisse, Befragungen von Außendienstlern`,`Extern: Kunden, Absatzmittler/Händler, Messen, Konkurrenz, Patentämter, Forschungsinstitute`]},
+{cat:4, q:`Was ist Innocentive?`, a:`Eine Website, auf der Unternehmen ihre Probleme mit Belohnung ausschreiben — Freiwillige können die Lösung liefern.`},
+{cat:4, q:`Was sind die drei Kriterien zur Patenterstellung? (sehr klausurrelevant!)`, a:[`Neuheit (für eine Fachkraft)`,`Erfinderische Tätigkeit → nicht etwas, das man nur beobachten kann`,`Gewerbliche Anwendbarkeit → z.B. MP3`], tag:'top'},
+{cat:4, q:`Wie lange kann man ein Patent halten — was muss man noch wissen?`, a:[`Max. 20 Jahre — Markenrechte dagegen nur 10 Jahre`,`Wird jährlich teurer`,`Ist beim Justizamt (Patentamt) zu beantragen`,`Kann in einem anderen Land bis zu 12 Monate nach Erstpatentierung nochmal patentiert werden`], tag:'wichtig'},
+{cat:4, q:`Was ist Open/Closed Innovation?`, a:`Open Innovation: Integration externer Wissensquellen (Outside-in) und Weitergabe von Lizenzen/Patenten (Inside-out).`},
+{cat:4, q:`Wann sollte ein Unternehmen ein Patent an andere zur Nutzung freigeben — wann nicht?`, a:`Ja, wenn der USP des eigenen Produkts dadurch nicht getragen wird — z.B. an Firmen, die gar nicht die eigene Konkurrenz sind (Laserscheibenwischer an Solarpanel-Hersteller, wenn ich Autohersteller bin).`},
+{cat:4, q:`Welche zwei Arten von Kreativität gibt es?`, a:[`Praktische: ungewöhnliche Lösungswege finden`,`Künstlerische: außergewöhnliche Bilder, Musik oder Design`]},
+{cat:4, q:`Welche drei Kreativitätstechniken gibt es, mit je einem Beispiel?`, a:[`Intuitive Assoziation: Brainstorming`,`Systematische Abwandlung: Morphologische Analyse`,`Intuitive Konfrontation: Synektik`]},
+{cat:4, q:`Nenne die drei wichtigen Aspekte des Brainstorming fürs Marketing.`, a:[`1. Keine Wertung der Ideen während der Ideensammlung`,`2. Quantität vor Qualität`,`3. Eine Assoziationskette daraus bilden`]},
+{cat:4, q:`Erkläre die Morphologische Analyse in vier Punkten.`, a:[`1. Zerlegung der Fragestellung/des Produkts in Grundbestandteile`,`2. Entscheidungsparameter bilden`,`3. Anpassungen im Nachhinein gut möglich`,`4. eher zielführend als andere Methoden`]},
+{cat:4, q:`Was gehört zur Synektik?`, a:`Die Verfremdung — man überträgt Wissen auf ein anderes Szenario, z.B. wenn Ingenieure Beobachtungen aus der Natur nutzen.`},
+{cat:4, q:`Was kannst du zum TED-Talk über intrinsische Motivation als Basis für Kreativität sagen?`, a:`Extrinsische Motivation wie Geld macht kreatives Arbeiten weniger effizient als intrinsische Motivation.`},
+{cat:4, q:`Welche zwei Methoden zur Agilität gibt es?`, a:`Scrum und Design Thinking — die Fähigkeit, schnell und flexibel zu sein.`},
+{cat:4, q:`Welche drei Personengruppen gehören zu einem Scrum-Team?`, a:[`Product Owner`,`Scrum Master`,`Development Team`]},
+{cat:4, q:`Was macht der Product Owner?`, a:`Bindet Markt und Kunde ein, ist allein für das Produkt verantwortlich, verantwortlich fürs Product Backlog.`},
+{cat:4, q:`Was macht das Development Team im Scrum?`, a:`Liefert vereinbarte Produktfunktionalitäten, arbeitet eigenverantwortlich, besteht aus divergenten Gruppen (viel unterschiedliches Wissen).`},
+{cat:4, q:`Was macht ein Scrum Master?`, a:`Sorgt für Einhaltung der Scrum-Regeln, dient als Leader/Coach.`},
+{cat:4, q:`Was passiert, wenn das Scrum-Ziel eines Durchlaufs nicht erreicht wird?`, a:`Man muss einen Schritt zurückgehen.`},
+{cat:4, q:`Bestehen Scrum-Teams nur während der Tätigkeit oder dauerhaft?`, a:`Dauerhaft.`},
+{cat:4, q:`Nenne die Scrum-Zahlen: Dauer, Planung, Daily Scrum, Sprint Review, Sprint Retro.`, a:[`Dauer = 4 Wochen`,`Planung = 8 h`,`Daily Scrum = 15 min`,`Review = 4 h`,`Retrospective = 3 h`], tag:'wichtig'},
+{cat:4, q:`Auf der Suche nach Innovation: welche drei Thesen wurden genannt?`, a:[`1. Kreativität und AQ sind die neue Intelligenz`,`2. Man soll sich informieren, um die Zukunft kommen zu sehen`,`3. Die Zukunft liegt in Randgebieten, nicht im Mainstream`]},
+{cat:4, q:`Was ist Diskontinuität, und wie findet man sie?`, a:`Das Durchbrechen/Stören eines Ablaufs. Finden: anhand von Trends ablesen & innovative Lösungen für kleine Ärgernisse einer Person finden.`},
+{cat:4, q:`Was ist ein Punktewertungsverfahren, und was macht man davor?`, a:`Davor: einen Mindestwert festlegen, ab dem man eine Idee verfolgt. Es ist eine gewichtete Entscheidungsmatrix.`},
+{cat:4, q:`Was bedeutet Shrinkflation?`, a:`Das Produkt behält den Preis, hat aber weniger Inhalt/Qualität etc.`},
+{cat:4, q:`Welcher Begriff bei den Verpackungsfunktionen sollte man sich merken?`, a:`Informationsfunktion — was auf der Packung draufsteht.`},
+{cat:4, q:`Was sagt die Produktmarkierung (bei "Marke") aus?`, a:`Es ist die Namensgebung einer Marke.`},
+{cat:4, q:`Welche Möglichkeiten der Heraushebung gibt es vor der Markenvergabe?`, a:`Auszeichnungen, Zertifikate, Ursprungshinweise, Lieferantenhinweise, Gesetzgeber.`},
+{cat:4, q:`Welche 7 Möglichkeiten gibt es, ein Warenzeichen (den Namen) zu vergeben?`, a:[`Wortmarke, Buchstabenmarke (DB), Zahlenmarke (4711), Bildmarke (Apple), Farbmarke (Magenta), Formmarke (Cola-Flasche), Hörmarke`]},
+{cat:4, q:`Private Label (Handelsmarken wie "ja!") — welche vier Infos musst du kennen?`, a:[`Handelsunternehmen bringen ein eigenes Produkt raus — fragen bei allen Produzenten an und nehmen den billigsten für die Eigenmarke`,`Sind günstiger für den Kunden`,`Produzenten profitieren von ausgelasteten Maschinen`,`Handelspartner kann sich den Lieferpartner aussuchen`]},
+{cat:4, q:`Was sind Ingredient Branding und Co-Branding — worin unterscheiden sie sich?`, a:[`Co-Branding: zwei bekannte Marken bringen zusammen ein neues Produkt raus (z.B. Bacardi Cola)`,`Ingredient Branding: eine Marke verbaut eine andere Marke in ihrem Produkt (z.B. früher Intel-CPU in Macbooks)`]},
+{cat:4, q:`Bei der Servicepolitik gibt es zwei Arten von Service — welche, und was beinhalten sie?`, a:[`Pre-Sales-Service: technische Beratung, Kostenvoranschläge, Lieferung zur Probe etc.`,`After-Sales-Service: Gewährleistung, Umtauschrecht, Zustelldienst, Installation/Montage, Reparaturdienst, Kundenbindungsprogramm`]},
+{cat:4, q:`Gibt es beim stationären Handel ein Umtauschrecht? Und wenn ich online bestellt habe, im Laden abholen und dort zurückgeben will?`, a:`Nein, im Laden gekauft gibt es kein gesetzliches Umtauschrecht. Habe ich online bezahlt — selbst wenn ich die Ware nur im Laden abgeholt habe — greift das Widerrufsrecht (Fernabsatzvertrag).`},
+{cat:4, q:`Wie lang ist die Gewährleistungsfrist, was muss man noch wissen?`, a:[`24 Monate`,`Ab Monat 13 gilt Beweislastumkehr — der Kunde muss beweisen, dass die Ware schon vorher defekt war`,`Ist gesetzliche Pflicht`], tag:'wichtig'},
+{cat:4, q:`Was gibt es zur Garantie zu wissen?`, a:[`Ist freiwillig (im Gegensatz zur Gewährleistung)`,`Dauer und alle weiteren Bedingungen sind ebenfalls freiwillig festlegbar`]},
+{cat:4, q:`Was ist geplante Obsoleszenz bei einem Produkt?`, a:`Bewusste Strategie von Herstellern, die Lebensdauer/Nutzbarkeit eines Produkts künstlich zu verkürzen.`},
+{cat:4, q:`Welche Arten geplanter Obsoleszenz gibt es?`, a:[`Materielle Obsoleszenz: Sabotage, Sollbruchstellen (z.B. Glühbirnendraht)`,`Psychologische Obsoleszenz: voll funktionsfähige Produkte werden vom Verbraucher als veraltet/unmodern empfunden und deshalb ersetzt`]},
+{cat:4, q:`Was ist alte, was ist neue Disruption?`, a:`Alt: neue Firmen verdrängen alte durch neue Erfindungen. Neu: ein komplett neuer Markt entsteht, ohne bisherige zu zerstören.`},
+{cat:4, q:`Was sind Nondisruptive Creations?`, a:`Neue Erfindungen, die keine bisherigen Firmen verdrängen — z.B. Kreuzfahrtschiffe oder Mini-Kredite.`},
+{cat:4, q:`Was sind Red Ocean und Blue Ocean Strategien?`, a:`Blue Ocean: Unternehmen erschließen konkurrenzfreie Märkte. Red Ocean: gesättigte Märkte, in denen der Kampf um Marktanteile enorm ist.`},
+{cat:4, q:`Was ist die "Law of Diffusion of Innovation"?`, a:`Beschreibt, wie sich neue Ideen, Technologien oder Produkte im Laufe der Zeit in einer Gesellschaft verbreiten.`},
+{cat:4, q:`Welche Zielgruppen will man bei der Law of Diffusion of Innovation zuerst erreichen?`, a:`Die Innovators (wollen immer als erste alles haben) und direkt danach die Early Adopters (Hebel bei der Verbreitung).`},
+
+// ---- Kategorie 5: Preispolitik ----
+{cat:5, q:`Preispolitik aus Konsumentensicht — welche zwei Eigenschaften hat sie?`, a:`Ist dynamisch und kurzfristig.`},
+{cat:5, q:`Bei der Preisdifferenzierung gibt es sechs Arten — wie heißen sie und was machen sie?`, a:[`Mengenmäßig: Abnahmemenge bestimmt den Preis`,`Zeitlich: z.B. gleiche Reise ist zu anderem Buchungszeitpunkt billiger (→ Dynamic Pricing)`,`Räumlich: z.B. Tankstelle an Autobahn vs. Landstraße`,`Personell: z.B. Privat- vs. Kassenpatient`,`Leistungsbezogen: Preisunterschied ist überproportional zum Produktunterschied`,`Preisbündelung: z.B. Pauschalreisen`], tag:'wichtig'},
+{cat:5, q:`Was versteht man unter "Dynamic Pricing" im Kontext der Preisdifferenzierung?`, a:`Eine Form zeitlicher Preisdifferenzierung, bei der der Preis automatisiert auf Basis von Angebot, Nachfrage, Wettbewerbspreisen oder Kundenverhalten variiert.`},
+{cat:5, q:`Kann ein Produkt aufgrund seiner Verwendung unterschiedliche Preise haben?`, a:`Ja — verwendungsbezogene Preisdifferenzierung (z.B. Software oder Lack: privater vs. gewerblicher Verbrauch).`},
+{cat:5, q:`Nenne die Preisabsatzfunktion und erläutere die Variablen.`, a:[`P(x) = a − b·x`,`a = Höchstpreis`,`b = Proportionalitätsfaktor (wie stark der Preis sinkt, wenn der Absatz um eine Einheit steigt)`], tag:'wichtig'},
+{cat:5, q:`Wie heißen im Diagramm die Punkte, an denen Höchstpreis bzw. Sättigungsmenge die Achsen treffen? (P = y-Achse, x = x-Achse)`, a:`P = Höchstpreis. x = Sättigungsmenge.`},
+{cat:5, q:`Ist die Diagonale der Preis-Absatz-Funktion in der Regel steigend oder fallend — was sagt das aus?`, a:`Fallend — der Preis muss reduziert werden, um mehr Absatz zu generieren. Ist der Preis 0 und es gibt trotzdem keinen Absatz mehr, ist die Sättigungsmenge erreicht.`},
+{cat:5, q:`Es gibt zwei Preisstrategien — wie heißen sie und was machen sie?`, a:[`Price Skimming: erst hoher Preis, der dann fällt (z.B. USP-Produkte, Auto zuerst mit großem Motor, kleinere Motoren folgen)`,`Penetration Pricing: erst niedriger Preis, der dann steigt`], tag:'wichtig'},
+{cat:5, q:`Welche der beiden Strategien — Price Skimming oder Penetration Pricing — hält Wettbewerber fern?`, a:`Penetration Pricing, da man von Anfang an günstig ist.`},
+{cat:5, q:`Was ist ein Graumarkt?`, a:`Zwei Märkte, die vom selben Unternehmen mit demselben Produkt beliefert werden — ein Produkt wird im billigeren Land beschafft und in die Lieferkette des teureren Marktes eingeschleust.`},
+{cat:5, q:`Ist ein Graumarkt illegal?`, a:`Nein, es ist eine Grauzone.`},
+{cat:5, q:`Beim Graumarkt beliefert ein Wholesaler einen Retailer im teureren Markt — wer bleibt ggf. auf seinen Waren sitzen?`, a:`Der Wholesaler des teuren Marktes, da er nicht so billig anbieten kann wie der aus dem Ausland.`},
+{cat:5, q:`Was sind Gründe für Landespreisunterschiede (Thema Graumarkt)?`, a:[`1. Schwierig zu erschließende Märkte`,`2. Um international konkurrenzfähig zu bleiben`,`3. Ggf. andere Wettbewerber in den Märkten`,`4. Unterschiedliches Gewährleistungsrecht`]},
+{cat:5, q:`Was könnten Verbraucherprobleme bei einem Graumarkt-Produkt sein?`, a:`Das Produkt hat Eigenschaften, die im eigenen Markt nicht gängig sind (falsche Lenkradseite, falsche Steckeranschlüsse, Softwareupdates etc.).`},
+{cat:5, q:`Wie kann ein Unternehmen einem entstehenden Graumarkt entgegenwirken?`, a:`KYC bei Lieferanten anlegen und prüfen, ob es sich um legitime Partner handelt.`},
+{cat:5, q:`Wann ist ein Produkt graumarktfähig?`, a:[`1. Wenn es leicht transportfähig ist`,`2. Wenn zwischen nationalem und internationalem Markt extreme Preisunterschiede bestehen`,`3. Wenn das Produkt dieselben Eigenschaften wie im lokalen Markt hat`]},
+
+// ---- Kategorie 6: Vertriebs- & Kommunikationspolitik ----
+{cat:6, q:`In der Vertriebspolitik (Place) gibt es drei Oberkategorien — wie heißen sie?`, a:`Vertriebssysteme, Verkaufsorgane und Logistiksysteme = Vertriebsmix.`},
+{cat:6, q:`Was ist direkter Vertrieb, und was sind seine Eigenschaften?`, a:`Hersteller → Abnehmer. Eigenschaften: Einsatz von Vertriebsmitarbeitern, eigene/gebundene Verkaufsstellen, Direct Marketing, Teleshopping, Online-Vertrieb.`},
+{cat:6, q:`Was ist indirekter Vertrieb, und was sind seine Eigenschaften?`, a:`Hersteller → Absatzmittler → Endabnehmer. Nur ein Absatzmittler = einstufig, mehrere Formen = mehrstufiger indirekter Vertrieb.`},
+{cat:6, q:`Ist Franchising indirekter oder direkter Vertrieb, und was ist das?`, a:`Weder noch — dazwischen. Aus Kundensicht fühlt es sich direkt an, aus Unternehmenssicht indirekt. Jemand verkauft in meinem Namen mit meinen Standards.`},
+{cat:6, q:`Vor-/Nachteile direkter Vertrieb?`, a:[`Vorteil: direkte Steuerung der Aktivitäten, Handelsspanne bleibt beim Hersteller, direkter Kundenkontakt`,`Nachteil: hoher Kapitalbedarf (eigene Läden, Personal etc.), geringerer Distributionsgrad`]},
+{cat:6, q:`Vor-/Nachteile indirekter Vertrieb?`, a:[`Vorteil: hoher Distributionsgrad erzielbar, schnelle Expansion möglich, mehr Flexibilität, geringere Kapitalbindung`,`Nachteil: Handelsmarge geht an Vertriebspartner, Abhängigkeit von Absatzmittlern, geringe Distributionskontrolle`]},
+{cat:6, q:`Beim Vertrieb gibt es eine unternehmenseigene und eine unternehmensfremde Form — wie heißen sie?`, a:[`Unternehmenseigen: Reisender — hohe Fachkenntnis, feste Arbeitszeiten, Weisungsgebundenheit`,`Unternehmensfremd: Handelsvertreter — begrenzte Kontrolle, keine Zusatzaufgaben, leistungsabhängige Vergütung`]},
+{cat:6, q:`Wie lautet die Kostenformel für Reisender und Vertreter?`, a:`Kosten Reisender = Fixkosten Reisender + Provision Reisender × Umsatz. Kosten Vertreter = Fixkosten Vertreter + Provision Vertreter × Umsatz. (In der Realität sind Provision Reisender und Fixkosten Vertreter oft 0.)`},
+{cat:6, q:`Kommunikationspolitik: was kann zwischen Sender und Empfänger passieren, welche zwei Arten von Störungen gibt es?`, a:[`Sender → {Störung} → Empfänger: Nachricht kann falsch ankommen`,`Umweltinduzierte Störungen: z.B. ein weltweites Event lässt gewisse Erwähnungen falsch ankommen`,`Wettbewerbsinduzierte Störungen: der Wettbewerb ändert sich, z.B. vergleichende Werbung`]},
+{cat:6, q:`Was kannst du zur Wahrnehmung bei der Kommunikationspolitik sagen?`, a:`Man nimmt Botschaften über verschiedene Sinne wahr — allein 50 % über das Sehen.`},
+{cat:6, q:`Nenne die neun Instrumente der Kommunikationspolitik (Kommunikationsmix).`, a:[`1. Mediawerbung`,`2. Verkaufsförderung`,`3. Direct Marketing`,`4. Public Relations`,`5. Sponsoring`,`6. Persönliche Kommunikation`,`7. Messen`,`8. Event Marketing`,`9. Social-Media-Kommunikation`], tag:'wichtig'},
+{cat:6, q:`Was versteht man unter Mediawerbung?`, a:`Transport und Verbreitung werblicher Informationen über Werbeträger gegen Entgelt.`},
+{cat:6, q:`Nenne den Ablauf des Planungsprozesses der Kommunikationspolitik.`, a:[`1. Analyse der Kommunikationssituation (gesellschaftliches Klima etc.)`,`2. Festlegung der Kommunikationsziele`,`3. Planung der Zielgruppe (bestimmt den Werbekanal)`,`4. Festlegung der Kommunikationsstrategie`,`5. Festlegung des Budgets, Einsatz von Instrumenten und Maßnahmenplanung`,`6. Durchführung der Kommunikationserfolgskontrolle`], tag:'wichtig'},
+{cat:6, q:`Was bedeutet Culture für die Kommunikationspolitik?`, a:`Das kollektive Verständnis davon, wie man sich zu verhalten hat — darauf müssen Werbespots angepasst werden.`},
+{cat:6, q:`Unterschied zwischen Low-Context Cultures und High-Context Cultures?`, a:`Low-Context: direkte Nachrichten (z.B. Deutsche — direktes Ja/Nein). High-Context: eher umschrieben (z.B. Japaner).`},
+{cat:6, q:`Bei der Zielgruppenplanung — worauf kommt es an?`, a:`Ob die Zielgruppe direkt angesprochen werden soll, oder ob sie einen Bias hat (z.B. Mütter kaufen oft, was die Kinder wollen).`},
+{cat:6, q:`Welche Fragen sollten in einem Briefing der Kommunikationspolitik geklärt werden?`, a:`Konkurrenzrahmenbedingungen? Wichtigste Produktaspekte? Marketingziele? Rolle der Werbung dabei? Zielgruppe? Was soll die Person fühlen?`},
+{cat:6, q:`Wie teilt man ein Werbebudget auf — welche zwei Teile gibt es?`, a:`Sachliche Verteilung (Marken, Produkte etc.) und zeitliche Verteilung (Timing).`},
+{cat:6, q:`Bei der Zielgruppenerreichung gibt es zwei negative Effekte — Streuverlust und Nicht-Erreichen der Zielgruppe. Was ist das jeweils?`, a:[`Streuverlust: erreichte Personengruppen, die keine potenziellen Nutzer des Produkts sind`,`Nicht-Erreichen der Zielgruppe: Leute, die man erreichen will, die aber nicht auf den bekannten Marketingkanälen unterwegs sind`]},
+];
+
+CARDS.forEach((c,i)=>c.id = i);
+
+/* Quiz bank — hand-picked tricky / high-yield MC questions */
+const QUIZ = [
+  {q:`Ein Unternehmen ist Monopolist. Wie hoch ist sein relativer Marktanteil?`, opts:[`0 %`,`100 %`,`Nicht existent`,`Kann nicht berechnet werden, daher 50 %`], correct:2, explain:`Bei einem Monopolisten gibt es keinen Vergleichs-Marktführer — der relative Marktanteil existiert schlicht nicht (nicht 0 %!).`},
+  {q:`Ein Unternehmen hat einen relativen Marktanteil von 101 %. Ist das möglich?`, opts:[`Nein, max. sind 100 % möglich`,`Ja, wenn das Unternehmen selbst Marktführer ist und wächst`,`Nein, das wäre ein Rechenfehler`,`Nur bei Monopolisten möglich`], correct:1, explain:`Der relative Marktanteil kann über 100 % liegen — er kann aber nicht negativ werden.`},
+  {q:`Was steht auf der x-Achse der BCG-Matrix?`, opts:[`Relativer Marktanteil`,`Marktwachstum`,`Umsatz`,`Zeit`], correct:1, explain:`x-Achse = Marktwachstum, y-Achse = relativer Marktanteil. Die Kreisgröße zeigt die Umsatzbedeutung.`},
+  {q:`Ein Unternehmen bringt ein neues Produkt außerhalb seines bisherigen Sortiments auf einen bereits vorhandenen Markt. Welches Ansoff-Feld ist das?`, opts:[`Marktdurchdringung`,`Markterschließung`,`Sortimentserweiterung`,`Diversifikation`], correct:2, explain:`Produkt neu + Markt vorhanden = Sortimentserweiterung.`},
+  {q:`Ein Hersteller bringt ein neues Produkt in einen für ihn neuen Markt. Welches Ansoff-Feld ist das?`, opts:[`Marktdurchdringung`,`Markterschließung`,`Sortimentserweiterung`,`Diversifikation`], correct:3, explain:`Neu + Neu = Diversifikation (vertikal, horizontal oder lateral).`},
+  {q:`Wie lange kann ein Patent maximal gehalten werden?`, opts:[`10 Jahre`,`15 Jahre`,`20 Jahre`,`Unbegrenzt, solange man zahlt`], correct:2, explain:`Patente: max. 20 Jahre. Markenrechte dagegen nur 10 Jahre.`},
+  {q:`Wie lange gilt eine Markenrecht-Eintragung?`, opts:[`10 Jahre`,`20 Jahre`,`Lebenslang`,`5 Jahre`], correct:0, explain:`Markenrechte gelten 10 Jahre (verlängerbar) — nicht zu verwechseln mit der 20-Jahres-Frist bei Patenten.`},
+  {q:`Wie lang ist die gesetzliche Gewährleistungsfrist in Deutschland?`, opts:[`12 Monate`,`24 Monate`,`36 Monate`,`Es gibt keine feste Frist`], correct:1, explain:`24 Monate — und ab Monat 13 liegt die Beweislast beim Käufer.`},
+  {q:`Ab welchem Monat der Gewährleistung muss der Käufer beweisen, dass die Ware schon vorher defekt war?`, opts:[`Ab Monat 6`,`Ab Monat 13`,`Ab Monat 18`,`Nie, das liegt immer beim Verkäufer`], correct:1, explain:`In den ersten 12 Monaten wird vermutet, dass der Mangel schon beim Kauf vorlag. Ab Monat 13 dreht sich die Beweislast um.`},
+  {q:`Ist eine Herstellergarantie gesetzlich verpflichtend?`, opts:[`Ja, immer 24 Monate`,`Nein, sie ist freiwillig`,`Nur bei Elektrogeräten`,`Nur wenn keine Gewährleistung besteht`], correct:1, explain:`Garantie ist freiwillig — im Gegensatz zur gesetzlichen Gewährleistung.`},
+  {q:`Welche Preisstrategie hält Wettbewerber eher fern?`, opts:[`Price Skimming`,`Penetration Pricing`,`Beide gleich gut`,`Keine von beiden`], correct:1, explain:`Penetration Pricing — man startet günstig, was für Konkurrenten unattraktiv ist, in den Markt einzusteigen.`},
+  {q:`Ein Produkt startet mit hohem Preis, der über die Zeit sinkt. Welche Strategie ist das?`, opts:[`Penetration Pricing`,`Price Skimming`,`Dynamic Pricing`,`Preisbündelung`], correct:1, explain:`Price Skimming — typisch bei USP-Produkten (z.B. neue Tech-Produkte).`},
+  {q:`Ein Kunde kauft den teureren von zwei identischen Weinen, weil er denkt, teurer = besser. Wie heißt dieser Effekt?`, opts:[`Survivor Bias`,`Buyer's Remorse`,`Veblen-Effekt`,`Anchoring-Effekt`], correct:2, explain:`Veblen-Effekt: höherer Preis wird als Qualitätssignal interpretiert.`},
+  {q:`Welche Rolle im Buying Center kontrolliert, welche Informationen zum Entscheider durchdringen?`, opts:[`Buyer`,`User`,`Gatekeeper`,`Influencer`], correct:2, explain:`Der Gatekeeper filtert/kontrolliert den Informationsfluss zum Decider.`},
+  {q:`Welche Rolle im Buying Center trifft die finale Entscheidung?`, opts:[`User`,`Decider`,`Gatekeeper`,`Buyer`], correct:1, explain:`Der Decider trifft die finale Entscheidung, oft auf Basis von Rentabilität.`},
+  {q:`Ein Hersteller motiviert Händler mit Exklusivverträgen und Vorführgeräten, seine Produkte aktiv zu verkaufen. Welche Strategie ist das?`, opts:[`Pull-Strategie`,`Push-Strategie`,`Penetration-Strategie`,`Blue-Ocean-Strategie`], correct:1, explain:`Push-Strategie: der Hersteller "schiebt" das Produkt über den Händler zum Kunden.`},
+  {q:`Ein Hersteller bewirbt sein Produkt direkt beim Endkunden, damit dieser aktiv beim Händler danach fragt. Welche Strategie ist das?`, opts:[`Push-Strategie`,`Pull-Strategie`,`Franchising`,`Yield Management`], correct:1, explain:`Pull-Strategie: Nachfrage wird beim Endkunden erzeugt, die den Handel "zieht".`},
+  {q:`Was beschreibt das Uno-Actu-Prinzip?`, opts:[`Ein Produkt wird nur einmal verkauft`,`Dienstleistungen werden gleichzeitig erstellt und konsumiert`,`Ein Preis gilt nur für einen Kunden`,`Ein Patent gilt nur in einem Land`], correct:1, explain:`Dienstleistungen sind nicht lagerfähig — Erstellung und Konsum fallen zeitlich zusammen.`},
+  {q:`Ist Franchising direkter oder indirekter Vertrieb?`, opts:[`Direkter Vertrieb`,`Indirekter Vertrieb`,`Weder noch — dazwischen`,`Kommt auf die Branche an`], correct:2, explain:`Aus Kundensicht wirkt Franchising direkt, aus Unternehmenssicht ist es indirekt — es liegt dazwischen.`},
+  {q:`Wie viele der neun Instrumente der Kommunikationspolitik kannst du nennen — welches gehört NICHT dazu?`, opts:[`Sponsoring`,`Event Marketing`,`Yield Management`,`Public Relations`], correct:2, explain:`Yield Management ist ein Preisinstrument (Dienstleistungsmarketing), kein Kommunikationsinstrument.`},
+  {q:`Was unterscheidet Willkürliche Auswahl von Zufallsauswahl?`, opts:[`Es ist dasselbe`,`Willkürlich = bewusste Auswahl (wer gerade da ist), NICHT zufällig`,`Zufallsauswahl ist eine Unterkategorie der willkürlichen Auswahl`,`Willkürliche Auswahl gibt es im Marketing nicht`], correct:1, explain:`Willkürliche Auswahl ist eine Form der BEWUSSTEN Auswahl — trotz des Namens nicht dasselbe wie echte Zufallsauswahl!`},
+  {q:`Bei der bewussten Stichprobenauswahl wählt man gezielt die Personen mit dem höchsten Umsatz aus. Wie heißt dieses Verfahren?`, opts:[`Quotenauswahl`,`Typische Auswahl`,`Konzentrationsverfahren`,`Willkürliche Auswahl`], correct:2, explain:`Konzentrationsverfahren: man konzentriert sich auf die umsatzstärksten Fälle.`},
+  {q:`Was ist im Marketing der Normalfall bei Befragungen — Voll- oder Teilerhebung?`, opts:[`Vollerhebung`,`Teilerhebung`,`Beide gleich häufig`,`Weder noch, meist Sekundärdaten`], correct:1, explain:`Vollerhebungen wären quasi ein Zensus und sind im Marketing kaum praktikabel — Teilerhebung ist der Normalfall.`},
+  {q:`Wie waren Marketing und Vertrieb in den 1950er/60er Jahren angeordnet?`, opts:[`Marketing über Vertrieb`,`Vertrieb über Marketing`,`Gleichberechtigt`,`Es gab noch keine Trennung`], correct:1, explain:`In der Verkäufermarkt-Ära (50er/60er) war der Vertrieb dem Marketing übergeordnet. Das kehrte sich erst später um.`},
+  {q:`Ein Kunde kauft online, holt die Ware aber im Laden ab und möchte sie zurückgeben. Hat er ein Umtauschrecht?`, opts:[`Nein, wie bei jedem Ladenkauf`,`Ja, weil online bezahlt wurde (Fernabsatzvertrag)`,`Nur mit Kassenbon`,`Nur innerhalb von 24 Stunden`], correct:1, explain:`Entscheidend ist der Fernabsatzvertrag (online bezahlt) — das Widerrufsrecht greift, unabhängig von der Abholung.`},
+];
+
+/* ============ STATE ============ */
+let learned = new Set();
+let currentTab = 'day1';
+let quizIdx = 0, quizScore = 0, quizOrder = [], quizAnswered = false;
+
+const STORAGE_KEY = 'learned-cards';
+
+const hasArtifactStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
+
+async function loadProgress(){
+  // Prefer Anthropic's artifact storage (syncs across devices) when available —
+  // e.g. running this file inside claude.ai.
+  if(hasArtifactStorage()){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      if(res && res.value){ learned = new Set(JSON.parse(res.value)); renderProgress(); return; }
+    }catch(e){ /* key doesn't exist yet, fall through */ }
+  }
+  // Fallback: plain browser localStorage — this is what kicks in when the file
+  // is downloaded and opened directly (double-click, or via a local server).
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) learned = new Set(JSON.parse(raw));
+  }catch(e){ /* localStorage unavailable (rare) */ }
+  renderProgress();
+}
+async function saveProgress(){
+  if(hasArtifactStorage()){
+    try{ await window.storage.set(STORAGE_KEY, JSON.stringify([...learned]), false); return; }catch(e){}
+  }
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify([...learned])); }catch(e){}
+}
+function toggleLearned(id, val){
+  if(val) learned.add(id); else learned.delete(id);
+  saveProgress(); renderProgress();
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(el=>el.classList.toggle('learned', val));
+}
+function renderProgress(){
+  const total = CARDS.length, done = learned.size;
+  document.getElementById('progress-text').textContent = `${done} / ${total} gelernt`;
+  document.getElementById('progress-pct').textContent = Math.round(done/total*100)+'%';
+  document.getElementById('progress-fill').style.width = (done/total*100)+'%';
+}
+
+/* ============ RENDER ============ */
+function fmtAnswer(a){
+  if(Array.isArray(a)){
+    return `<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  }
+  return `<p style="margin:0">${a}</p>`;
+}
+
+function cardEl(c){
+  const div = document.createElement('div');
+  div.className = 'flashcard' + (learned.has(c.id) ? ' learned' : '');
+  div.setAttribute('data-id', c.id);
+  const tagHtml = c.tag ? `<span class="tag ${c.tag}">${c.tag==='top'?'Sehr klausurrelevant':c.tag==='wichtig'?'Wichtig':'Knifflig'}</span>` : '';
+  div.innerHTML = `
+    <div class="flashcard-inner">
+      <div class="face front">
+        ${tagHtml}
+        <div class="q-text">${c.q}</div>
+        <div class="hint">Klicken zum Umdrehen →</div>
+      </div>
+      <div class="face back">
+        <div class="a-text">${fmtAnswer(c.a)}</div>
+        <div class="learn-actions">
+          <button class="no">🔁 Nochmal</button>
+          <button class="yes">✓ Weiß ich</button>
+        </div>
+      </div>
+    </div>`;
+  div.querySelector('.flashcard-inner').addEventListener('click', (e)=>{
+    if(e.target.tagName === 'BUTTON') return;
+    div.classList.toggle('flipped');
+  });
+  div.querySelector('.yes').addEventListener('click', (e)=>{ e.stopPropagation(); toggleLearned(c.id, true); });
+  div.querySelector('.no').addEventListener('click', (e)=>{ e.stopPropagation(); toggleLearned(c.id, false); });
+  return div;
+}
+
+function renderCategory(catId, container, filterMode){
+  const cat = CATEGORIES.find(c=>c.id===catId);
+  let cards = CARDS.filter(c=>c.cat===catId);
+  if(filterMode === 'open') cards = cards.filter(c=>!learned.has(c.id));
+  if(filterMode === 'flagged') cards = cards.filter(c=>c.tag);
+
+  const head = document.createElement('div');
+  head.className = 'cat-head';
+  head.innerHTML = `<h2>${cat.name}</h2><span class="cat-count">${cards.length} Karten</span>`;
+  container.appendChild(head);
+
+  if(NOTES[catId]){
+    const note = document.createElement('div');
+    note.className = 'note';
+    note.innerHTML = `<b>📝 Notiz aus der Vorlesung</b>${NOTES[catId]}`;
+    container.appendChild(note);
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+  cards.forEach(c=>grid.appendChild(cardEl(c)));
+  container.appendChild(grid);
+  if(cards.length===0){
+    grid.innerHTML = `<p style="color:var(--muted);font-size:13px;">Alles in dieser Kategorie schon als gelernt markiert 🎉</p>`;
+  }
+}
+
+function renderDay(dayNum, filterMode){
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const info = DAY_INFO[dayNum];
+  const plan = document.createElement('div');
+  plan.className = 'day-plan';
+  plan.innerHTML = `<div class="num">${dayNum}</div><div><h3>${info.title}</h3><p>${info.desc}</p></div>`;
+  main.appendChild(plan);
+
+  const filterRow = document.createElement('div');
+  filterRow.className = 'filter-row';
+  filterRow.innerHTML = `
+    <button class="chip ${filterMode==='all'?'active':''}" data-f="all">Alle Karten</button>
+    <button class="chip ${filterMode==='open'?'active':''}" data-f="open">Nur offene</button>
+    <button class="chip ${filterMode==='flagged'?'active':''}" data-f="flagged">Nur markierte ⚑</button>
+  `;
+  main.appendChild(filterRow);
+  filterRow.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>renderDay(dayNum, chip.getAttribute('data-f')));
+  });
+
+  CATEGORIES.filter(c=>c.day===dayNum).forEach(c=>renderCategory(c.id, main, filterMode));
+}
+
+function renderAll(filterMode){
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const filterRow = document.createElement('div');
+  filterRow.className = 'filter-row';
+  filterRow.style.marginTop = '4px';
+  filterRow.innerHTML = `
+    <button class="chip ${filterMode==='all'?'active':''}" data-f="all">Alle Karten</button>
+    <button class="chip ${filterMode==='open'?'active':''}" data-f="open">Nur offene</button>
+    <button class="chip ${filterMode==='flagged'?'active':''}" data-f="flagged">Nur markierte ⚑</button>
+  `;
+  main.appendChild(filterRow);
+  filterRow.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>renderAll(chip.getAttribute('data-f')));
+  });
+  CATEGORIES.forEach(c=>renderCategory(c.id, main, filterMode));
+}
+
+/* ---- QUIZ ---- */
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function startQuiz(){
+  quizOrder = shuffle(QUIZ.map((_,i)=>i));
+  quizIdx = 0; quizScore = 0;
+  renderQuiz();
+}
+function renderQuiz(){
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const shell = document.createElement('div');
+  shell.className = 'quiz-shell';
+
+  if(quizIdx >= quizOrder.length){
+    const pct = Math.round(quizScore/quizOrder.length*100);
+    shell.innerHTML = `
+      <div class="quiz-result">
+        <p style="color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">Ergebnis</p>
+        <div class="big">${quizScore} / ${quizOrder.length}</div>
+        <p style="color:var(--muted);">${pct>=80?'Stark! Du bist bereit. 🔥':pct>=60?'Solide — nochmal die roten Themen anschauen.':'Ab zurück zu den Karteikarten der Bereiche, die gewackelt haben.'}</p>
+        <button class="quiz-restart" id="quiz-again">Nochmal durchspielen</button>
+      </div>`;
+    main.appendChild(shell);
+    document.getElementById('quiz-again').addEventListener('click', startQuiz);
+    return;
+  }
+
+  const q = QUIZ[quizOrder[quizIdx]];
+  quizAnswered = false;
+  shell.innerHTML = `
+    <div class="quiz-progress"><span>Frage ${quizIdx+1} / ${quizOrder.length}</span><span>Score: ${quizScore}</span></div>
+    <div class="quiz-q">${q.q}</div>
+    <div id="quiz-opts"></div>
+    <div class="quiz-explain" id="quiz-explain">${q.explain}</div>
+    <button class="quiz-next" id="quiz-next">Nächste Frage →</button>
+  `;
+  main.appendChild(shell);
+  const optsWrap = shell.querySelector('#quiz-opts');
+  q.opts.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', ()=>{
+      if(quizAnswered) return;
+      quizAnswered = true;
+      const correct = i === q.correct;
+      if(correct) quizScore++;
+      [...optsWrap.children].forEach((b,bi)=>{
+        b.disabled = true;
+        if(bi===q.correct) b.classList.add('correct');
+        else if(bi===i) b.classList.add('wrong');
+      });
+      shell.querySelector('#quiz-explain').classList.add('show');
+      shell.querySelector('#quiz-next').classList.add('show');
+      shell.querySelector('.quiz-progress').innerHTML = `<span>Frage ${quizIdx+1} / ${quizOrder.length}</span><span>Score: ${quizScore}</span>`;
+    });
+    optsWrap.appendChild(btn);
+  });
+  shell.querySelector('#quiz-next').addEventListener('click', ()=>{ quizIdx++; renderQuiz(); });
+}
+
+/* ---- TABS ---- */
+function setTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.getAttribute('data-tab')===tab));
+  if(tab==='day1') renderDay(1,'all');
+  else if(tab==='day2') renderDay(2,'all');
+  else if(tab==='day3') renderDay(3,'all');
+  else if(tab==='all') renderAll('all');
+  else if(tab==='quiz') startQuiz();
+}
+
+function buildTabs(){
+  const bar = document.getElementById('tabbar');
+  const tabs = [
+    {id:'day1', label:'Tag 1 · Fundament'},
+    {id:'day2', label:'Tag 2 · Konsument & Innovation'},
+    {id:'day3', label:'Tag 3 · Preis, Vertrieb & Review'},
+    {id:'all', label:'Alle Karten'},
+    {id:'quiz', label:'⚡ Quiz'},
+  ];
+  tabs.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab';
+    btn.setAttribute('data-tab', t.id);
+    btn.textContent = t.label;
+    btn.addEventListener('click', ()=>setTab(t.id));
+    bar.appendChild(btn);
+  });
+}
+
+document.getElementById('reset-btn').addEventListener('click', async ()=>{
+  if(!confirm('Wirklich den gesamten Lernfortschritt zurücksetzen?')) return;
+  learned = new Set();
+  await saveProgress();
+  renderProgress();
+  setTab(currentTab);
+});
+
+buildTabs();
+loadProgress().then(()=>setTab('day1'));
+</script>
+</body>
+</html>
+

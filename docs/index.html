@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lernsprint — Marketing-Klausur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <div class="sky-glow sky-glow--red"></div>
+  <div class="sky-glow sky-glow--ember"></div>
+  <div class="cloud cloud--a"></div>
+  <div class="cloud cloud--b"></div>
+  <div class="cloud cloud--c"></div>
+  <div class="grid-fade"></div>
+  <svg class="drill-tunnel" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <g class="drill-tunnel__spin">
+      <circle cx="200" cy="200" r="30" />
+      <circle cx="200" cy="200" r="70" />
+      <circle cx="200" cy="200" r="115" />
+      <circle cx="200" cy="200" r="165" />
+      <circle cx="200" cy="200" r="220" />
+      <g class="drill-tunnel__spokes">
+        <line x1="200" y1="0" x2="200" y2="400"/>
+        <line x1="0" y1="200" x2="400" y2="200"/>
+        <line x1="60" y1="60" x2="340" y2="340"/>
+        <line x1="340" y1="60" x2="60" y2="340"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<header>
+  <div class="wrap header-row">
+    <p class="eyebrow"><span class="dot"></span> 3-Tage-Sprint · Marketing Grundlagen</p>
+    <button class="user-btn" id="user-btn" type="button">
+      <span class="user-btn__icon">◆</span>
+      <span id="user-btn-label">Kein Profil</span>
+    </button>
+  </div>
+  <div class="wrap">
+    <h1 class="hero-h1">
+      <span class="slash-line">DREI TAGE.<span class="slash"></span></span>
+      <span class="slash-line">EIN ZIEL.</span>
+      <span class="slash-line slash-line--accent">KEIN ZURÜCK.</span>
+    </h1>
+    <p class="sub">141 Karteikarten aus deinen Vorlesungsnotizen, sortiert nach Thema und Tag. Der Fortschritt bleibt gespeichert — pro Profil, auch geräteübergreifend, wenn der Server mitläuft. Am Ende wartet das Quiz auf die Fallstricke.</p>
+    <div class="progress-row">
+      <div class="progress-shell">
+        <div class="progress-label"><span id="progress-text">0 / 141 gelernt</span><span id="progress-pct">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+      <button class="reset-btn" id="reset-btn" type="button">Fortschritt zurücksetzen</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="tabbar" id="tabbar"></div>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<footer>
+  <span id="mode-indicator" class="mode-indicator"></span>
+  Viel Erfolg — du bist auch nur ein Mensch, aber ein gut vorbereiteter.
+</footer>
+
+<div class="modal-backdrop" id="user-modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
+    <h2 id="user-modal-title">Profil wählen</h2>
+    <p class="modal-hint" id="modal-hint">Kein Login nötig — einfach einen Namen wählen oder neu anlegen.</p>
+    <div class="user-list" id="user-list"></div>
+    <form id="add-user-form" class="add-user-form">
+      <input type="text" id="new-user-name" maxlength="40" placeholder="Neuer Profilname…" autocomplete="off">
+      <button type="submit">Hinzufügen</button>
+    </form>
+    <button class="modal-close" id="modal-close" type="button">Schließen</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

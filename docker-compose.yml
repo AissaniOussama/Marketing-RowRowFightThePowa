@@ -1,0 +1,13 @@
+services:
+  lernsprint:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - lernsprint-data:/app/backend/data
+    restart: unless-stopped
+
+volumes:
+  lernsprint-data:
