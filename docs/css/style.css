@@ -18,12 +18,14 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
 .wrap{max-width:1000px;margin:0 auto;padding:0 20px; position:relative; z-index:2;}
 .muted-note{color:var(--muted); font-size:13px;}
 
-/* ============ SKY BACKGROUND (nach dem Hero aktiv) ============ */
+/* ============ SKY BACKGROUND ============ */
+/* hero-bg.jpg liegt fix hinter der ganzen Seite — sichtbar sobald man aus dem Hero scrollt */
 .sky{
   position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
-  background:
-    radial-gradient(ellipse 900px 500px at 50% -10%, #131a2c 0%, transparent 60%),
-    linear-gradient(180deg, #0a0d16 0%, #07080a 55%, #050505 100%);
+  background-image:url('../assets/hero-bg.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
 .sky-glow{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; animation:pulseGlow 12s ease-in-out infinite;}
 .sky-glow--red{width:520px; height:520px; top:-160px; right:-120px; background:radial-gradient(circle, rgba(231,0,19,.55), transparent 70%);}
@@ -47,24 +49,18 @@ body{padding:0 0 80px; position:relative; overflow-x:hidden;}
   mask-image:linear-gradient(180deg, black 0%, transparent 55%);
 }
 
-/* ============ HERO / HEADER ============ */
-/*
-  Dario-Savior.jpg füllt den Header als normaler (nicht-fixed) Hintergrund.
-  Beim Scrollen fadet das Hero-Bild via JS + opacity-Transition weg —
-  funktioniert cross-browser (kein background-attachment:fixed nötig).
-  Danach ist der Sky-Hintergrund sichtbar.
-*/
+/* ============ HEADER ============ */
+/* Dario-Savior.jpg nur im Header-Bereich — scrollt ganz normal mit dem Inhalt mit.
+   Kein fixed, kein JS nötig. Sky-Hintergrund bleibt darunter unverändert. */
 header{
   padding:40px 0 26px;
   border-bottom:1px solid var(--line);
   position:relative;
-  z-index:10;
+  z-index:2;
   overflow:hidden;
-  /* Fade-Transition für den Scroll-Effekt */
-  transition: opacity .25s ease;
 }
 
-/* Dario-Bild als Pseudo-Element hinter dem Header-Inhalt */
+/* Dario-Bild als Hintergrund des Headers */
 header::before{
   content:'';
   position:absolute; inset:0; z-index:0;
@@ -73,32 +69,21 @@ header::before{
   background-position:center top;
   background-repeat:no-repeat;
 }
-/* Dunkler Verlauf-Overlay für Lesbarkeit */
+
+/* Dunkler Verlauf-Overlay damit Text lesbar bleibt */
 header::after{
   content:'';
   position:absolute; inset:0; z-index:1;
   background:linear-gradient(
     180deg,
     rgba(7,8,10,.30) 0%,
-    rgba(7,8,10,.60) 55%,
-    rgba(7,8,10,.90) 100%
+    rgba(7,8,10,.65) 60%,
+    rgba(7,8,10,.92) 100%
   );
 }
 
-/* Alle direkten Kinder des headers über dem Bild */
+/* Alle direkten Kinder des Headers über dem Bild */
 header > *{ position:relative; z-index:2; }
-
-/* Klasse die JS setzt wenn Header aus dem Viewport scrollt */
-header.hero-hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
-/* .hero-bg aus alter Version — deaktiviert */
-.hero-bg{ display:none; }
-
-/* dario-hero-bg aus alter Version — deaktiviert */
-.dario-hero-bg{ display:none; }
 
 .header-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .eyebrow{
@@ -162,7 +147,7 @@ header.hero-hidden{
 .tab:hover{color:var(--text);}
 .tab.active{color:var(--red); border-bottom-color:var(--red);}
 
-main{padding-top:30px; position:relative; z-index:10;}
+main{padding-top:30px; position:relative; z-index:2;}
 
 /* ============ DAY PLAN ============ */
 .day-plan{
@@ -271,7 +256,7 @@ main{padding-top:30px; position:relative; z-index:10;}
 .quiz-restart{background:none; border:1px solid var(--line); color:var(--text); padding:11px 20px; cursor:pointer; margin-top:14px; font-family:'IBM Plex Mono',monospace;}
 .quiz-restart:hover{border-color:var(--red); color:var(--red);}
 
-footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; font-family:'IBM Plex Mono',monospace; position:relative; z-index:10;}
+footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; font-family:'IBM Plex Mono',monospace; position:relative; z-index:2;}
 .mode-indicator{display:block; margin-bottom:8px; font-size:11px; letter-spacing:.03em; opacity:.75;}
 
 /* ============ USER MODAL ============ */
@@ -319,5 +304,4 @@ footer{text-align:center; color:var(--muted); font-size:12px; padding:44px 0 0; 
 
 @media (prefers-reduced-motion: reduce){
   .cloud, .sky-glow, .progress-fill, .flashcard, .word-zurueck{animation:none !important;}
-  header{ transition:none !important; }
 }

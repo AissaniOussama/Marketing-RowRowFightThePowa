@@ -327,21 +327,3 @@ async function init() {
 
 init();
 
-/* ============ HERO FADE-OUT BEIM SCROLLEN ============ */
-/* Sobald der Header den Viewport verlässt, bekommt er die Klasse hero-hidden
-   und fadet via CSS-Transition (opacity) weg. Kein background-attachment:fixed
-   nötig — funktioniert auf macOS/Safari genauso wie auf Windows/Chrome. */
-(function(){
-  const header = document.querySelector('header');
-  if (!header || !('IntersectionObserver' in window)) return;
-
-  const obs = new IntersectionObserver(
-    function(entries){
-      entries.forEach(function(entry){
-        header.classList.toggle('hero-hidden', !entry.isIntersecting);
-      });
-    },
-    { threshold: 0.05 }   // fadet weg wenn nur noch 5 % sichtbar
-  );
-  obs.observe(header);
-})();
