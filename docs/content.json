@@ -115,8 +115,8 @@
       "q": "Lebenszyklusanalyse: Was ist ein Relaunch, und wie sind die Achsen der Grafik aufgebaut?",
       "a": [
         "Relaunch: ein Produkt minimal ändern, damit es nochmal einen Boost bekommt (z.B. Facelift)",
-        "x-Achse = Umsatz/Absatz",
-        "y-Achse = Zeit"
+        "x-Achse = Zeit",
+        "y-Achse = Umsatz/Absatz"
       ],
       "id": 6
     },
@@ -126,8 +126,8 @@
       "a": [
         "Umsatzgrößen als unterschiedlich große Kreise darstellen",
         "Cash-Cows geben am meisten her, da sie keine Investitionsgelder mehr fressen — bei Stars ist das noch der Fall",
-        "x-Achse: Marktwachstum",
-        "y-Achse: relativer Marktanteil"
+        "x-Achse: relativer Marktanteil",
+        "y-Achse: Marktwachstum"
       ],
       "tag": "wichtig",
       "id": 7
@@ -1229,8 +1229,8 @@
         "Umsatz",
         "Zeit"
       ],
-      "correct": 1,
-      "explain": "x-Achse = Marktwachstum, y-Achse = relativer Marktanteil. Die Kreisgröße zeigt die Umsatzbedeutung."
+      "correct": 0,
+      "explain": "x-Achse = relativer Marktanteil, y-Achse = Marktwachstum. Die Kreisgröße zeigt die Umsatzbedeutung."
     },
     {
       "q": "Ein Unternehmen bringt ein neues Produkt außerhalb seines bisherigen Sortiments auf einen bereits vorhandenen Markt. Welches Ansoff-Feld ist das?",
