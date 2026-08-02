@@ -179,7 +179,7 @@
       "q": "Was unterscheidet vertikale, horizontale und laterale Diversifikation?",
       "a": [
         "Vertikal: ein vor- oder nachgelagertes Produkt in der Produktkette wird neu erschlossen",
-        "Horizontal: ein Rohstoff aus einem Produkt wird auch in einem anderen genutzt",
+        "Horizontal: Erweiterung des Programms um Produkte, die mit den bisherigen in einem sachlichen Zusammenhang stehen (gleiche Kundengruppe/Technologie)",
         "Lateral: eine komplett neue Sache (z.B. Rolls Royce mit Autos UND Turbinen)"
       ],
       "id": 13
@@ -295,7 +295,7 @@
         "Produktion und Konsumtion zum gleichen Zeitpunkt",
         "Hohe Bedeutung der Mund-zu-Mund-Kommunikation",
         "Uno-Actu-Prinzip, Yield Management",
-        "Problematik externer Faktoren → DE-Marketing"
+        "Problematik externer Faktoren → DL-Marketing"
       ],
       "id": 25
     },
@@ -308,12 +308,12 @@
     {
       "cat": 2,
       "q": "Was bedeutet Yield Management?",
-      "a": "Preise werden flexibel an Nachfrage und Auslastung angepasst, um den Gewinn zu maximieren (z.B. wie belädt man einen LKW so voll wie möglich, ohne zu schwer zu werden).",
+      "a": "Preise werden flexibel an Nachfrage und Auslastung angepasst, um den Gewinn zu maximieren (z.B. Flugpreise oder Hotelzimmer, die je nach Buchungszeitpunkt und Auslastung teurer oder günstiger werden).",
       "id": 27
     },
     {
       "cat": 2,
-      "q": "Was ist die Problematik externer Faktoren im \"DE-Marketing\"?",
+      "q": "Was ist die Problematik externer Faktoren im \"DL-Marketing\"?",
       "a": "Die Dienstleistungsqualität wird durch nicht kontrollierbare äußere Einflüsse mitbestimmt und ist daher schwer planbar.",
       "id": 28
     },
@@ -641,7 +641,7 @@
       "cat": 4,
       "q": "Wie lange kann man ein Patent halten — was muss man noch wissen?",
       "a": [
-        "Max. 20 Jahre — Markenrechte dagegen nur 10 Jahre",
+        "Max. 20 Jahre — Markenrechte dagegen 10 Jahre (aber unbegrenzt verlängerbar)",
         "Wird jährlich teurer",
         "Ist beim Justizamt (Patentamt) zu beantragen",
         "Kann in einem anderen Land bis zu 12 Monate nach Erstpatentierung nochmal patentiert werden"
